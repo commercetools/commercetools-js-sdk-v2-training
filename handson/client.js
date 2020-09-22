@@ -22,8 +22,8 @@ const getClient = () => {
     host: 'https://auth.europe-west1.gcp.commercetools.com',
     projectKey,
     credentials: {
-      clientId: '2REUzyqvS5XPDyg0fMWRhImS',
-      clientSecret: 'S1GeVbB_IVuuUt3q3vElBFW37dHZI2bk',
+      clientId: '',
+      clientSecret: '',
     },
     fetch,
   })
