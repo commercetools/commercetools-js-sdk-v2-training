@@ -1,0 +1,24 @@
+{
+  "name": "commercetools-js-sdk-training-solutions",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "1": "node Task01_project_setup.js",
+    "2": "node Task02_customers.js",
+    "clientTest": "node handson/client.js"
+  },
+  "dependencies": {
+    "@commercetools/api-request-builder": "^5.6.3",
+    "@commercetools/importapi-sdk": "^1.3.0",
+    "@commercetools/sdk-auth": "^3.0.9",
+    "@commercetools/sdk-client": "^2.1.2",
+    "@commercetools/sdk-middleware-auth": "^6.1.4",
+    "@commercetools/sdk-middleware-http": "^6.0.8",
+    "@commercetools/typescript-sdk": "^1.2.0",
+    "chalk-animation": "^1.6.0",
+    "cli-highlight": "^2.1.4",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  }
+}
