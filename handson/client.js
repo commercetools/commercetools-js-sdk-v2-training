@@ -1,71 +1,73 @@
-const { createAuthMiddlewareForClientCredentialsFlow } = require('@commercetools/sdk-middleware-auth');
-const { createHttpMiddleware } = require ('@commercetools/sdk-middleware-http')
-const { createClient } = require ('@commercetools/sdk-client')
+const {
+  createAuthMiddlewareForClientCredentialsFlow,
+} = require("@commercetools/sdk-middleware-auth");
+const { createHttpMiddleware } = require("@commercetools/sdk-middleware-http");
+const { createClient } = require("@commercetools/sdk-client");
 const {
   createApiBuilderFromCtpClient,
-} = require ('@commercetools/typescript-sdk')
+} = require("@commercetools/typescript-sdk");
 
 const {
-  createApiBuilderFromCtpClient : createApiBuilderFromCtpClientOnlyForImports,
-} = require ('@commercetools/importapi-sdk')
+  createApiBuilderFromCtpClient: createApiBuilderFromCtpClientOnlyForImports,
+} = require("@commercetools/importapi-sdk");
 
-const fetch = require ('node-fetch');
+const fetch = require("node-fetch");
 
-const projectKey = 'training-fady-24-7'
+const projectKey = "training-fady-24-7";
 
-
-
-const getClient = () => { 
+const getClient = () => {
   const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
-    host: 'https://auth.europe-west1.gcp.commercetools.com',
+    host: "https://auth.europe-west1.gcp.commercetools.com",
     projectKey,
     credentials: {
-      clientId: '',
-      clientSecret: '',
+      clientId: "",
+      clientSecret: "",
     },
     fetch,
-  })
-  
+  });
+
   const httpMiddleware = createHttpMiddleware({
-    host: 'https://api.europe-west1.gcp.commercetools.com',
+    host: "https://api.europe-west1.gcp.commercetools.com",
     fetch,
-  })
-  
+  });
+
   const ctpClient = createClient({
     middlewares: [authMiddleware, httpMiddleware],
-  })
+  });
   return ctpClient;
-}
+};
 
-const getImportClient = () => { 
+const getImportClient = () => {
   const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
-    host: 'https://auth.europe-west1.gcp.commercetools.com',
+    host: "https://auth.europe-west1.gcp.commercetools.com",
     projectKey,
     credentials: {
-      clientId: '2REUzyqvS5XPDyg0fMWRhImS',
-      clientSecret: 'S1GeVbB_IVuuUt3q3vElBFW37dHZI2bk',
+      clientId: "",
+      clientSecret: "",
     },
     fetch,
-  })
-  
+  });
+
   const httpMiddleware = createHttpMiddleware({
-    host: 'https://import.europe-west1.gcp.commercetools.com',
+    host: "https://import.europe-west1.gcp.commercetools.com",
     fetch,
-  })
-  
+  });
+
   const ctpClient = createClient({
     middlewares: [authMiddleware, httpMiddleware],
-  })
+  });
   return ctpClient;
-}
+};
 
-const getMLClient = () => { }
+const getMLClient = () => {};
 
-const getMyAPIClient = () => { }
+const getMyAPIClient = () => {};
 
 const apiRoot = createApiBuilderFromCtpClient(getClient());
 
-const importApiRoot = createApiBuilderFromCtpClientOnlyForImports(getImportClient());
+const importApiRoot = createApiBuilderFromCtpClientOnlyForImports(
+  getImportClient()
+);
 
 module.exports.apiRoot = apiRoot;
 module.exports.importApiRoot = importApiRoot;

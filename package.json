@@ -7,6 +7,8 @@
     "1": "node Task01_project_setup.js",
     "2": "node Task02_customers.js",
     "3": "node Task03_import_sync_products.js",
+    "4a": "node Task04a_states.js",
+    "4b": "node Task04b_checkout.js",
     "clientTest": "node handson/client.js"
   },
   "dependencies": {
