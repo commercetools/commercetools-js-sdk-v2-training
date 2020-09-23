@@ -65,9 +65,7 @@ const getMyAPIClient = () => {};
 
 const apiRoot = createApiBuilderFromCtpClient(getClient());
 
-const importApiRoot = createApiBuilderFromCtpClientOnlyForImports(
-  getImportClient()
-);
+const importApiRoot = createApiBuilderFromCtpClientOnlyForImports(getImportClient());
 
 module.exports.apiRoot = apiRoot;
 module.exports.importApiRoot = importApiRoot;

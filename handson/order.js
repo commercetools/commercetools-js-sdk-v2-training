@@ -49,6 +49,28 @@ const addLineItemsToCart = (arrayOfSKUs, cartId) => {
   });
 };
 
+const addDiscountCodeToCart = (discountCode, cartId) => {
+  return getCartById(cartId).then((cart) => {
+    let updateActions = [{
+      action: "addDiscountCode",
+      code:discountCode
+    }];
+    return apiRoot
+      .withProjectKey({ projectKey })
+      .carts()
+      .withId({
+        ID: cart.body.id,
+      })
+      .post({
+        body: {
+          actions: updateActions,
+          version: cart.body.version,
+        },
+      })
+      .execute();
+  });
+};
+
 const createOrderFromCart = (cartId) => {
   return createOrderFromCartDraft(cartId).then((orderFromCartDraft) => {
     return apiRoot
@@ -107,6 +129,7 @@ const updateOrderCustomState = (customStateId, orderId) => {
 module.exports.createCart = createCart;
 module.exports.getCartById = getCartById;
 module.exports.addLineItemsToCart = addLineItemsToCart;
+module.exports.addDiscountCodeToCart = addDiscountCodeToCart;
 module.exports.createOrderFromCart = createOrderFromCart;
 module.exports.getOrderById = getOrderById;
 module.exports.updateOrderCustomState = updateOrderCustomState;
