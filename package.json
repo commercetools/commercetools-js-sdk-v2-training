@@ -7,8 +7,11 @@
     "1": "node Task01_project_setup.js",
     "2": "node Task02_customers.js",
     "3": "node Task03_import_sync_products.js",
+    "5": "node Task05_stores.js",
+    "6": "node Task06_search.js",
     "4a": "node Task04a_states.js",
     "4b": "node Task04b_checkout.js",
+    "6c": "node Task06c_graphql.js",
     "clientTest": "node handson/client.js"
   },
   "dependencies": {
@@ -22,6 +25,7 @@
     "chalk-animation": "^1.6.0",
     "cli-highlight": "^2.1.4",
     "csvtojson": "^2.0.10",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1"
   }
