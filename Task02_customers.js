@@ -20,7 +20,7 @@ const customerSampleData = {
 
 //getCustomerByKey('test123').then(log).catch(log);
 
-getCustomerById("e1fb13ba-d217-4428-afd9-ebef4bdfbbd9").then(log).catch(log);
+getCustomerById("10cb16bf-a5d8-4f47-b664-fe5cae2f75d0").then(log).catch(log);
 
 //createCustomerKeyVerfiedEmail(customerSampleData).then(log).catch(log);
 

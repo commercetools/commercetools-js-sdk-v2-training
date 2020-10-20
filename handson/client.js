@@ -93,13 +93,12 @@ const getMyAPIClient = () => {
       clientId: process.env.myClientId,
       clientSecret: process.env.myClientSecret,
       user: {
-        username: "test@test.com",
-        password: "0ekg5vch",
+        username: "fafa2@example.com",
+        password: "123",
       },
     },
     fetch,
   });
-
   const httpMiddleware = createHttpMiddleware({
     host: "https://api.europe-west1.gcp.commercetools.com",
     fetch,
@@ -123,6 +122,8 @@ const myApiRoot = createApiBuilderFromCtpClient(getMyAPIClient());
 
 module.exports.apiRoot = apiRoot;
 module.exports.myApiRoot = myApiRoot;
+module.exports.getMyAPIClient = getMyAPIClient;
+
 module.exports.storeApiRoot = storeApiRoot;
 module.exports.importApiRoot = importApiRoot;
 module.exports.projectKey = projectKey;

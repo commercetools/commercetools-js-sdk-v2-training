@@ -3,7 +3,7 @@ const { log } = require("./logger.js");
 
 const cartDraftData = {
   currency: "EUR",
-  customerId: "e1fb13ba-d217-4428-afd9-ebef4bdfbbd9",
+  customerId: "10cb16bf-a5d8-4f47-b664-fe5cae2f75d0",
   countryCode: "DE",
 };
 
@@ -40,7 +40,7 @@ const checkoutProcess = async () => {
   const order = await checkout.createOrderFromCart(filledCart.body.id);
   if (order) {
     return {
-      status: 200,
+      status: 201,
       message: "order created",
     };
   }

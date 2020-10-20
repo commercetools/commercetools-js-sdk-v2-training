@@ -12,4 +12,6 @@ module.exports.getCustomersInStore = (storeKey) =>
 
 //use me endpoint with another client
 module.exports.getMe = () =>
-  myApiRoot.withProjectKey({ projectKey }).me().get().execute();
+  myApiRoot.withProjectKey({ projectKey }).me().get().execute()
+
+ 
