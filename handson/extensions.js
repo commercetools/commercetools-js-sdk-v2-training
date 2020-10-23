@@ -1,11 +1,6 @@
 const { apiRoot, projectKey } = require("./client.js");
 
-module.exports.createExtension = (extensionDraftData) =>
-  apiRoot
-    .withProjectKey({ projectKey })
-    .extensions()
-    .post({ body: createExtensionDraft(extensionDraftData) })
-    .execute();
+module.exports.createExtension = (extensionDraftData) =>{}
 
 const createExtensionDraft = (extensionDraftData) => {
   const { key, destination, triggers } = extensionDraftData;

@@ -21,9 +21,4 @@ query {
   }
   `;
 
-module.exports.getCustomerWithOrders = () =>apiRoot.withProjectKey({projectKey}).graphql().post({
-    body:{
-        query:testQuery,
-        variables:{}
-    }
-}).execute();
+module.exports.getCustomerWithOrders = () => {}

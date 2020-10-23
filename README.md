@@ -1,10 +1,12 @@
 # commercetools-js-sdk-v2-training
 commercetools-js-sdk-v2-training
 
-** COMING SOON **
+https://ok.commercetools.com/training-offering-calendar
+
 NEW JAVASCRIPT COURSE USING THE NEW COMMERCETOOLS JS SDK 
 https://github.com/commercetools/commercetools-sdk-typescript#sdk
 
+Usage
 
 Add API Client Credentials in .env.sample then remove the ".sample" file name should be only ".env"
 then follow your trainer instructions to solve the exercises.
