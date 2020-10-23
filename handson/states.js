@@ -1,6 +1,6 @@
 const { apiRoot, projectKey } = require("./client.js");
 
-const createNewState = (stateDraftData) =>
+module.exports.createNewState = (stateDraftData) =>
   apiRoot
     .withProjectKey({ projectKey })
     .states()
@@ -19,7 +19,7 @@ const createStateDraft = (stateDraftData) => {
   };
 };
 
-const getStateByKey = (key) =>
+module.exports.getStateByKey = (key) =>
   apiRoot
     .withProjectKey({ projectKey })
     .states()
@@ -27,7 +27,7 @@ const getStateByKey = (key) =>
     .get()
     .execute();
 
-const getStateById = (ID) =>
+module.exports.getStateById = (ID) =>
   apiRoot
     .withProjectKey({ projectKey })
     .states()
@@ -35,7 +35,7 @@ const getStateById = (ID) =>
     .get()
     .execute();
 
-const addTransition = (stateId, transitionStateId) => {
+module.exports.addTransition = (stateId, transitionStateId) => {
   return getStateById(stateId).then((state) => {
     const updateActions = [
       {
@@ -63,10 +63,3 @@ const addTransition = (stateId, transitionStateId) => {
       .execute();
   });
 };
-
-module.exports.createNewState = createNewState;
-
-module.exports.getStateByKey = getStateByKey;
-module.exports.getStateById = getStateById;
-
-module.exports.addTransition = addTransition;

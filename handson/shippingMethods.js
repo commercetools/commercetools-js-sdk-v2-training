@@ -1,11 +1,9 @@
 const { apiRoot, projectKey } = require("./client.js");
 
-const getShippingMethodById = (ID) =>
+module.exports.getShippingMethodById = (ID) =>
   apiRoot
     .withProjectKey({ projectKey })
     .shippingMethods()
     .withId({ ID })
     .get()
     .execute();
-
-module.exports.getShippingMethodById = getShippingMethodById;

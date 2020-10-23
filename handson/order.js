@@ -1,6 +1,6 @@
 const { apiRoot, projectKey } = require("./client.js");
 
-const createCart = (cartDraftData) =>
+module.exports.createCart = (cartDraftData) =>
   apiRoot
     .withProjectKey({ projectKey })
     .carts()
@@ -21,10 +21,17 @@ const createCartDraft = (cartDraftData) => {
   };
 };
 
-const getCartById = (ID) =>
+module.exports.customerSignIn = (customerDetails) =>
+  apiRoot
+    .withProjectKey({ projectKey })
+    .login()
+    .post({ body: customerDetails })
+    .execute();
+
+module.exports.getCartById = (ID) =>
   apiRoot.withProjectKey({ projectKey }).carts().withId({ ID }).get().execute();
 
-const addLineItemsToCart = (arrayOfSKUs, cartId) => {
+module.exports.addLineItemsToCart = (arrayOfSKUs, cartId) => {
   return getCartById(cartId).then((cart) => {
     let updateActions = [];
     arrayOfSKUs.forEach((sku) => {
@@ -49,12 +56,14 @@ const addLineItemsToCart = (arrayOfSKUs, cartId) => {
   });
 };
 
-const addDiscountCodeToCart = (discountCode, cartId) => {
+module.exports.addDiscountCodeToCart = (discountCode, cartId) => {
   return getCartById(cartId).then((cart) => {
-    let updateActions = [{
-      action: "addDiscountCode",
-      code:discountCode
-    }];
+    let updateActions = [
+      {
+        action: "addDiscountCode",
+        code: discountCode,
+      },
+    ];
     return apiRoot
       .withProjectKey({ projectKey })
       .carts()
@@ -71,7 +80,7 @@ const addDiscountCodeToCart = (discountCode, cartId) => {
   });
 };
 
-const createOrderFromCart = (cartId) => {
+module.exports.createOrderFromCart = (cartId) => {
   return createOrderFromCartDraft(cartId).then((orderFromCartDraft) => {
     return apiRoot
       .withProjectKey({ projectKey })
@@ -92,7 +101,7 @@ const createOrderFromCartDraft = (cartId) => {
   });
 };
 
-const getOrderById = (ID) =>
+module.exports.getOrderById = (ID) =>
   apiRoot
     .withProjectKey({ projectKey })
     .orders()
@@ -100,7 +109,7 @@ const getOrderById = (ID) =>
     .get()
     .execute();
 
-const updateOrderCustomState = (customStateId, orderId) => {
+module.exports.updateOrderCustomState = (customStateId, orderId) => {
   return getOrderById(orderId).then((order) => {
     const updateActions = [
       {
@@ -126,10 +135,56 @@ const updateOrderCustomState = (customStateId, orderId) => {
   });
 };
 
-module.exports.createCart = createCart;
-module.exports.getCartById = getCartById;
-module.exports.addLineItemsToCart = addLineItemsToCart;
-module.exports.addDiscountCodeToCart = addDiscountCodeToCart;
-module.exports.createOrderFromCart = createOrderFromCart;
-module.exports.getOrderById = getOrderById;
-module.exports.updateOrderCustomState = updateOrderCustomState;
+module.exports.createPayment = (paymentDraft) =>
+  apiRoot
+    .withProjectKey({ projectKey })
+    .payments()
+    .post({ body: paymentDraft })
+    .execute();
+
+module.exports.setOrderState = (stateName, orderId) => {
+  return getOrderById(orderId).then((order) => {
+    const updateActions = [
+      {
+        action: "changeOrderState",
+        orderState: stateName,
+      },
+    ];
+    return apiRoot
+      .withProjectKey({ projectKey })
+      .orders()
+      .withId({ ID: order.body.id })
+      .post({
+        body: {
+          version: order.body.version,
+          actions: updateActions,
+        },
+      })
+      .execute();
+  });
+};
+
+module.exports.addPaymentToOrder = (paymentId, orderId) => {
+  return getOrderById(orderId).then((order) => {
+    const updateActions = [
+      {
+        action: "addPayment",
+        payment: {
+          typeId: "payment",
+          id: paymentId,
+        },
+      },
+    ];
+    return apiRoot
+      .withProjectKey({ projectKey })
+      .orders()
+      .withId({ ID: order.body.id })
+      .post({
+        body: {
+          version: order.body.version,
+          actions: updateActions,
+        },
+      })
+      .execute();
+  });
+};

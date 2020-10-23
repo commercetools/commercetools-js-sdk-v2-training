@@ -1,6 +1,6 @@
 const { apiRoot, projectKey } = require("./client.js");
 
-const getCustomerById = (ID) =>
+module.exports.getCustomerById = (ID) =>
   apiRoot
     .withProjectKey({ projectKey })
     .customers()
@@ -8,7 +8,7 @@ const getCustomerById = (ID) =>
     .get()
     .execute();
 
-const getCustomerByKey = (key) =>
+module.exports.getCustomerByKey = (key) =>
   apiRoot
     .withProjectKey({ projectKey })
     .customers()
@@ -40,7 +40,7 @@ const createCustomerDraft = (customerData) => {
   };
 };
 
-const createCustomer = (customerData) =>
+module.exports.createCustomer = (customerData) =>
   apiRoot
     .withProjectKey({ projectKey })
     .customers()
@@ -51,7 +51,7 @@ const createCustomer = (customerData) =>
 
 const createCustomerDraftKey = (customerData) => {};
 
-const createCustomerKeyVerfiedEmail = (customerData) =>
+module.exports.createCustomerKeyVerfiedEmail = (customerData) =>
   apiRoot
     .withProjectKey({ projectKey })
     .customers()
@@ -64,7 +64,10 @@ const createCustomerKeyVerfiedEmail = (customerData) =>
     })
     .execute();
 
-const assignCustomerToCustomerGroup = (customerKey, customerGroupKey) => {
+module.exports.assignCustomerToCustomerGroup = (
+  customerKey,
+  customerGroupKey
+) => {
   return getCustomerByKey(customerKey).then((customer) => {
     const updateActions = [
       {
@@ -87,9 +90,3 @@ const assignCustomerToCustomerGroup = (customerKey, customerGroupKey) => {
       .execute();
   });
 };
-
-module.exports.createCustomer = createCustomer;
-module.exports.createCustomerKeyVerfiedEmail = createCustomerKeyVerfiedEmail;
-module.exports.getCustomerByKey = getCustomerByKey;
-module.exports.getCustomerById = getCustomerById;
-module.exports.assignCustomerToCustomerGroup = assignCustomerToCustomerGroup;

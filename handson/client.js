@@ -11,7 +11,7 @@ const {
 const {
   createApiBuilderFromCtpClient: createApiBuilderFromCtpClientOnlyForImports,
 } = require("@commercetools/importapi-sdk");
-require('dotenv').config();
+require("dotenv").config();
 
 const fetch = require("node-fetch");
 
@@ -110,20 +110,13 @@ const getMyAPIClient = () => {
   return ctpClient;
 };
 
-const apiRoot = createApiBuilderFromCtpClient(getClient());
+module.exports.apiRoot = createApiBuilderFromCtpClient(getClient());
 
-const importApiRoot = createApiBuilderFromCtpClientOnlyForImports(
+module.exports.importApiRoot = createApiBuilderFromCtpClientOnlyForImports(
   getImportClient()
 );
 
-const storeApiRoot = createApiBuilderFromCtpClient(getStoreClient());
+module.exports.storeApiRoot = createApiBuilderFromCtpClient(getStoreClient());
 
-const myApiRoot = createApiBuilderFromCtpClient(getMyAPIClient());
-
-module.exports.apiRoot = apiRoot;
-module.exports.myApiRoot = myApiRoot;
-module.exports.getMyAPIClient = getMyAPIClient;
-
-module.exports.storeApiRoot = storeApiRoot;
-module.exports.importApiRoot = importApiRoot;
+module.exports.myApiRoot = createApiBuilderFromCtpClient(getMyAPIClient());
 module.exports.projectKey = projectKey;

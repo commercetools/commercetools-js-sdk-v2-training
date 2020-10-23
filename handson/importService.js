@@ -1,7 +1,7 @@
 const { importApiRoot, projectKey } = require("./client.js");
 const csvtojsonV2 = require("csvtojson");
 
-const createImportSink = (importSinkDraftData) =>
+module.exports.createImportSink = (importSinkDraftData) =>
   importApiRoot
     .withProjectKeyValue({ projectKey })
     .importSinks()
@@ -18,11 +18,17 @@ const createImportSinkDraft = (importSinkDraftData) => {
   };
 };
 
-const checkImportOperationStatus = (importSinkKey,id) =>importApiRoot
-.withProjectKeyValue({ projectKey }).products().importSinkKeyWithImportSinkKeyValue({importSinkKey}).importOperations().withIdValue({id}).get().execute();
+module.exports.checkImportOperationStatus = (importSinkKey, id) =>
+  importApiRoot
+    .withProjectKeyValue({ projectKey })
+    .products()
+    .importSinkKeyWithImportSinkKeyValue({ importSinkKey })
+    .importOperations()
+    .withIdValue({ id })
+    .get()
+    .execute();
 
-
-const importProducts = async (importSinkKey) =>
+module.exports.importProducts = async (importSinkKey) =>
   importApiRoot
     .withProjectKeyValue({ projectKey })
     .products()
@@ -50,18 +56,18 @@ const getProductDraftsArray = () => {
       products.forEach((product) => {
         productDraftsArray.push({
           key: participantNamePrefix + "-" + product.productName,
-          name:{
-            "de-DE":product.productName
+          name: {
+            "de-DE": product.productName,
           },
-          productType:{
-            typeId:'product-type',
-            key:product.productType
+          productType: {
+            typeId: "product-type",
+            key: product.productType,
           },
           slug: {
-            "de-DE":participantNamePrefix + "-" + product.productName,
+            "de-DE": participantNamePrefix + "-" + product.productName,
           },
-          description:{
-            "de-DE": product.description
+          description: {
+            "de-DE": product.description,
           },
           masterVariant: {
             sku: product.inventoryId,
@@ -76,7 +82,7 @@ const getProductDraftsArray = () => {
             images: [
               {
                 url: product.imageUrl,
-                dimensions:{"w":177,"h":237}
+                dimensions: { w: 177, h: 237 },
               },
             ],
           },
@@ -85,7 +91,3 @@ const getProductDraftsArray = () => {
       return productDraftsArray;
     });
 };
-
-module.exports.importProducts = importProducts;
-module.exports.checkImportOperationStatus=checkImportOperationStatus;
-module.exports.createImportSink = createImportSink;
