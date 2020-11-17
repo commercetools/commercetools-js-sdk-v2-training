@@ -7,7 +7,7 @@ module.exports.getCustomerById = (ID) =>
     .withId({ ID })
     .get()
     .execute();
-
+    
 module.exports.getCustomerByKey = (key) =>
   apiRoot
     .withProjectKey({ projectKey })

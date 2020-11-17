@@ -18,4 +18,4 @@ checkImportOperationStatus("productsImporter&Sync","bd71c221-e799-4d2c-bc9d-b6cb
 // -e TARGET_PROJECT_KEY=xxx \
 // -e TARGET_CLIENT_ID=xxx \
 // -e TARGET_CLIENT_SECRET=xxx \
-// commercetools/commercetools-project-sync:3.4.1 -s all
+// commercetools/commercetools-project-sync:3.8.0 -s all
