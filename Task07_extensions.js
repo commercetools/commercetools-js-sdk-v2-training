@@ -8,10 +8,10 @@ const {log} = require('./logger');
 const sampleTypeDraft = {
     key:'allowed-to-place-orders',
     name:{
-        "de-DE":'allowed-to-place-orders'
+        "de":'allowed-to-place-orders'
     },
     description:{
-        "de-DE":'allowed-to-place-orders'
+        "de":'allowed-to-place-orders'
     },
     resourceTypeIds:['customer'],
     fieldDefinitions:[{
@@ -20,7 +20,7 @@ const sampleTypeDraft = {
         },
         name:'allowed-to-place-orders',
         label:{
-            "de-DE":'Allowed to place orders'
+            "de":'Allowed to place orders'
         },
         required:false,
 

@@ -5,7 +5,7 @@ const stateDraftData = {
   key: "order-completed",
   type: "OrderState",
   name: {
-    "de-DE": "Order Completed ",
+    "de": "Order Completed ",
   },
   initial: false,
 };

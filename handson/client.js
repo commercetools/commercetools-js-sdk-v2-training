@@ -39,11 +39,11 @@ const getMyAPIClient = () => {
 
 module.exports.apiRoot = createApiBuilderFromCtpClient(getClient());
 
-module.exports.importApiRoot = createApiBuilderFromCtpClientOnlyForImports(
-  getImportClient()
-);
+// module.exports.importApiRoot = createApiBuilderFromCtpClientOnlyForImports(
+//   getImportClient()
+// );
 
-module.exports.storeApiRoot = createApiBuilderFromCtpClient(getStoreClient());
+// module.exports.storeApiRoot = createApiBuilderFromCtpClient(getStoreClient());
 
-module.exports.myApiRoot = createApiBuilderFromCtpClient(getMyAPIClient());
+// module.exports.myApiRoot = createApiBuilderFromCtpClient(getMyAPIClient());
 module.exports.projectKey = projectKey;
