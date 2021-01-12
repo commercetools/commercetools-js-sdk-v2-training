@@ -21,7 +21,7 @@ const createImportSinkDraft = (importSinkDraftData) => {
 module.exports.checkImportOperationStatus = (importSinkKey, id) =>
   importApiRoot
     .withProjectKeyValue({ projectKey })
-    .products()
+    .productDrafts()
     .importSinkKeyWithImportSinkKeyValue({ importSinkKey })
     .importOperations()
     .withIdValue({ id })
@@ -31,7 +31,7 @@ module.exports.checkImportOperationStatus = (importSinkKey, id) =>
 module.exports.importProducts = async (importSinkKey) =>
   importApiRoot
     .withProjectKeyValue({ projectKey })
-    .products()
+    .productDrafts()
     .importSinkKeyWithImportSinkKeyValue({ importSinkKey })
     .post({
       body: await createImportProductsDraft(),
@@ -74,6 +74,7 @@ const getProductDraftsArray = () => {
             prices: [
               {
                 value: {
+                  type: "centPrecision",
                   currencyCode: product.currencyCode,
                   centAmount: parseInt(product.basePrice),
                 },
