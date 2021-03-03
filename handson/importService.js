@@ -51,6 +51,7 @@ const getProductDraftsArray = () => {
             prices: [
               {
                 value: {
+                  type: "centPrecision",
                   currencyCode: product.currencyCode,
                   centAmount: parseInt(product.basePrice),
                 },
