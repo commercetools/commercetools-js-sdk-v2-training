@@ -2,7 +2,7 @@ const { createImportSink, importProducts,checkImportOperationStatus } = require(
 const { log } = require("./logger.js");
 
 // createImportSink({
-//     key:'productsImporter&Sync',
+//     key:'productsImporterAndSync',
 //     resourceType:'product-draft'
 // }).then(log).catch(log);
 

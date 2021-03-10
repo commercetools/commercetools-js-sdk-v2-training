@@ -48,6 +48,7 @@ const getProductDraftsArray = () => {
           },
           masterVariant: {
             sku: participantNamePrefix + "-" +product.inventoryId,
+            key: participantNamePrefix + "-" +product.inventoryId,
             prices: [
               {
                 value: {
