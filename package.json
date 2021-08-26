@@ -31,5 +31,12 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "node-fetch": "^2.6.1"
+  },
+  "resolutions": {
+    "csvtojson/**/lodash":"^4.17.21",
+    "cli-highlight/**/y18n":"^5.0.5",
+    "chalk-animation/**/hosted-git-info":"^2.8.9",
+    "chalk-animation/**/path-parse":"1.0.7",
+    "chalk-animation/**/trim-newlines":"4.0.1"
   }
 }
