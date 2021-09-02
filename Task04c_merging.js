@@ -18,10 +18,6 @@ const mergingProcessTest = async () => {
 
   let customerCart = await checkout.createCart(cartDraftData2);
 
-  anonymousCart = await checkout.addLineItemsToCart(
-    ["123", "123"],
-    anonymousCart.body.id
-  );
 
   customerCart = await checkout.addLineItemsToCart(
     ["123"],
