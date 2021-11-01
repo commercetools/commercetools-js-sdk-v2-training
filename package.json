@@ -14,7 +14,9 @@
     "6a": "node Task06a_search.js",
     "6b": "node Task06b_pagination.js",
     "6c": "node Task06c_graphql.js",
-    "7": "node Task07_extensions.js",
+    "7a": "node Task07a_custom_types.js",
+    "7b": "node Task07b_custom_objects.js",
+    "7c": "node Task07c_extensions.js",
     "8": "node Task08_subscriptions.js"
   },
   "dependencies": {
