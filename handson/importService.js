@@ -1,19 +1,11 @@
 const { importApiRoot, projectKey } = require("./client.js");
 const csvtojsonV2 = require("csvtojson");
 
-module.exports.createImportSink = (importSinkDraftData) =>{}
+module.exports.createImportContainer = (key) =>{}
 
-const createImportSinkDraft = (importSinkDraftData) => {
-  const { key, resourceType } = importSinkDraftData;
-  return {
-    key,
-    resourceType,
-  };
-};
+module.exports.checkImportOperationStatus = (id) =>{}
 
-module.exports.checkImportOperationStatus = (importSinkKey, id) =>{}
-
-module.exports.importProducts = async (importSinkKey) =>{}
+module.exports.importProducts = async (importContainerKey) =>{}
 
 const createImportProductsDraft = async () => {
   return {
@@ -48,7 +40,7 @@ const getProductDraftsArray = () => {
           },
           masterVariant: {
             sku: participantNamePrefix + "-" +product.inventoryId,
-            key: participantNamePrefix + "-" +product.inventoryId,
+            key: participantNamePrefix + "-" +product.productName,
             prices: [
               {
                 value: {
