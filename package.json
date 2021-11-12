@@ -28,7 +28,7 @@
     "@commercetools/sdk-middleware-http": "^6.1.0",
     "@commercetools/typescript-sdk": "^1.2.0",
     "chalk-animation": "^1.6.0",
-    "cli-highlight": "^2.1.4",
+    "cli-highlight": "^2.1.11",
     "csvtojson": "^2.0.10",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",

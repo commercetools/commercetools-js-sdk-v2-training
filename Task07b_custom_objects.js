@@ -5,9 +5,9 @@ const {log} = require('./logger');
 
 const sampleCustomObjectDraftData = {
     container: "compatibility-info",
-    key:'basil-seed-box',
+    key:'tulip-seed-product',
     value: {
-        IncompatibleSKUs: "tulip-seed-box",
+        IncompatibleSKUs: "basil-seed-product",
         LeafletID: "leaflet_1234",
         Instructions: {
             Title: "Plant Handling",
@@ -20,4 +20,4 @@ const sampleCustomObjectDraftData = {
 
 createCustomObject(sampleCustomObjectDraftData).then(log).catch(log);
 
-// getCustomObjectByContainerAndKey("compatibility-info","basil-seed-box").then(log).catch(log);
+// getCustomObjectByContainerAndKey("compatibility-info","tulip-seed-product").then(log).catch(log);

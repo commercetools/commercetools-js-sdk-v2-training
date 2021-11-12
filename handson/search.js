@@ -19,13 +19,12 @@ module.exports.simulateSearch = () =>
     })
     .execute();
 
-module.exports.simulatePagination = (perPage, page) =>
+module.exports.simulatePagination = async (perPage, page) =>
   apiRoot
     .withProjectKey({ projectKey })
     .products()
     .get({
-      queryArgs: {
-        
+      queryArgs: {      
         limit: perPage,
         offset: perPage * (page - 1),
       },
