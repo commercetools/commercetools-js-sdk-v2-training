@@ -25,7 +25,7 @@ module.exports.addDiscountCodeToCart = (discountCode, cartId) => {}
 module.exports.createOrderFromCart = (cartId) => {}
 
 const createOrderFromCartDraft = (cartId) => {
-  return getCartById(cartId).then((cart) => {
+  return this.getCartById(cartId).then((cart) => {
     return {
       id: cart.body.id,
       version: cart.body.version,

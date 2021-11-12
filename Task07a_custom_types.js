@@ -3,10 +3,10 @@ const {log} = require('./logger');
 
 
 const sampleTypeDraftData = {
-    key:'allowed-to-place-orders',
+    key:'ff-allowed-to-place-orders',
     name:{
-        "de":'allowed-to-place-orders',
-        "en":'allowed-to-place-orders'
+        "de":'ff-allowed-to-place-orders',
+        "en":'ff-allowed-to-place-orders'
     },
     description:{
         "de":'allowed-to-place-orders',
@@ -23,9 +23,7 @@ const sampleTypeDraftData = {
             "en":'Allowed to place orders'
         },
         required:false,
-
     }]
-
 }
 
 createCustomType(sampleTypeDraftData).then(log).catch(log);

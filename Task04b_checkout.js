@@ -17,10 +17,11 @@ const paymentDraft = {
     id:'10cb16bf-a5d8-4f47-b664-fe5cae2f75d0'
   }
 }
-//checkout.createCart(cartDraftData).then(log).catch(log)
+checkout.createCart(cartDraftData).then(log).catch(log)
 
-//checkout.addLineItemsToCart(['123','123'],'294f2971-9497-43c1-8898-b7760082c842').then(log).catch(log)
+//checkout.addLineItemsToCart(['sku123','sku123'],'294f2971-9497-43c1-8898-b7760082c842').then(log).catch(log)
 
+// checkout.addDiscountCodeToCart("SUMMER",'294f2971-9497-43c1-8898-b7760082c842').then(log).catch(log);
 //checkout.getCartById('294f2971-9497-43c1-8898-b7760082c842').then(log).catch(log)
 
 //checkout.createOrderFromCart('294f2971-9497-43c1-8898-b7760082c842').then(log).catch(log)
@@ -41,7 +42,7 @@ const checkoutProcess = async () => {
   let emptyCart = await checkout.createCart(cartDraftData);
 
   let filledCart = await checkout.addLineItemsToCart(
-    ["123", "123",'123'],
+    ["sku123", "sku123",'sku111'],
     emptyCart.body.id
   );
   filledCart = await checkout.addDiscountCodeToCart(
@@ -60,4 +61,4 @@ const checkoutProcess = async () => {
   }
 };
 
-checkoutProcess().then(log).catch(log);
+// checkoutProcess().then(log).catch(log);

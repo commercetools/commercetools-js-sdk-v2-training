@@ -1,40 +1,46 @@
 const checkout = require("./handson/order");
 const { log } = require("./logger.js");
 
-const cartDraftData = {
+const anonymousCartDraftData = {
   currency: "EUR",
-  //customerId: "10cb16bf-a5d8-4f47-b664-fe5cae2f75d0",
   countryCode: "DE",
 };
 
-const cartDraftData2 = {
+const customerCartDraftData = {
   currency: "EUR",
-  customerId: "10cb16bf-a5d8-4f47-b664-fe5cae2f75d0",
+  customerId: "a4d4babe-769d-4d49-96c0-88777b4f5d14",
   countryCode: "DE",
 };
 
 const mergingProcessTest = async () => {
-  let anonymousCart = await checkout.createCart(cartDraftData);
+  let anonymousCart = await checkout.createCart(anonymousCartDraftData);
 
-  let customerCart = await checkout.createCart(cartDraftData2);
+  let customerCart = await checkout.createCart(customerCartDraftData);
 
   anonymousCart = await checkout.addLineItemsToCart(
-    ["123", "123"],
+    ["sku111", "sku123","sku123"],
     anonymousCart.body.id
   );
 
   customerCart = await checkout.addLineItemsToCart(
-    ["123"],
+    ["sku123"],
     customerCart.body.id
   );
-  log(anonymousCart.body.id); // look it up in impex you will see it's merged
-  log(customerCart.body.id);
+  log("Anonymous Cart: " + anonymousCart.body.id); 
+  log("Customer Cart: "+ customerCart.body.id);
   const customerDetails = {
-    email: "persona1@example.com",
-    password: "123",
+    email: "test2@test.com",
+    password: "password",
     anonymousCartId: anonymousCart.body.id,
+    anonymousCartSignInMode: "MergeWithExistingCustomerCart", // try switching to UseAsNewActiveCustomerCart
   };
-  let test = await checkout.customerSignIn(customerDetails);
-  return test;
+  let result = await checkout.customerSignIn(customerDetails);
+  return result.body.cart;
 };
-mergingProcessTest().then(log).catch(log);
+mergingProcessTest().then((cart) => {
+  log("Active cart: " + cart.id);
+  cart.lineItems.forEach(item => {
+    log(item.variant.sku+ " :" + item.quantity);
+  });
+})
+.catch(log);

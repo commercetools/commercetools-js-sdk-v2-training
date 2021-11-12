@@ -3,6 +3,8 @@ const csvtojsonV2 = require("csvtojson");
 
 module.exports.createImportContainer = (key) =>{}
 
+module.exports.checkImportSummary = (importContainerKey) => {}
+
 module.exports.checkImportOperationStatus = (id) =>{}
 
 module.exports.importProducts = async (importContainerKey) =>{}

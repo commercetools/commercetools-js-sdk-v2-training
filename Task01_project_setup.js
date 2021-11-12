@@ -14,4 +14,4 @@ getProject().then(log).catch(log);
 
 //getShippingMethodById("fb9d70f3-c59a-4507-b1ad-73ad5acfac94").then(log).catch(log);
 
-//getTaxCategoryByKey("VAT").then(log).catch(log);
+// getTaxCategoryByKey("standard-tax-category").then(log).catch(log);
