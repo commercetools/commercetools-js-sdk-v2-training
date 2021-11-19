@@ -2,15 +2,15 @@ const {createCustomType} = require('./handson/customTypes');
 const {log} = require('./logger');
 
 
-
-
 const sampleTypeDraftData = {
-    key:'allowed-to-place-orders',
+    key:'ff-allowed-to-place-orders',
     name:{
-        "de-DE":'allowed-to-place-orders'
+        "de":'ff-allowed-to-place-orders',
+        "en":'ff-allowed-to-place-orders'
     },
     description:{
-        "de-DE":'allowed-to-place-orders'
+        "de":'allowed-to-place-orders',
+        "en":'allowed-to-place-orders'
     },
     resourceTypeIds:['customer'],
     fieldDefinitions:[{
@@ -19,12 +19,11 @@ const sampleTypeDraftData = {
         },
         name:'allowed-to-place-orders',
         label:{
-            "de-DE":'Allowed to place orders'
+            "de":'Allowed to place orders',
+            "en":'Allowed to place orders'
         },
         required:false,
-
     }]
-
 }
 
 createCustomType(sampleTypeDraftData).then(log).catch(log);

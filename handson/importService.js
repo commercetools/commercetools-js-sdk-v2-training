@@ -10,6 +10,15 @@ module.exports.createImportContainer = (key) =>
     })
     .execute();
 
+module.exports.checkImportSummary = (importContainerKey) =>
+    importApiRoot
+      .withProjectKeyValue({projectKey})
+      .importContainers()
+      .withImportContainerKeyValue({importContainerKey})
+      .importSummaries()
+      .get()
+      .execute();
+      
 module.exports.checkImportOperationStatus = (id) =>
   importApiRoot
     .withProjectKeyValue({ projectKey })

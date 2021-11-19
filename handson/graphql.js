@@ -1,29 +1,9 @@
 const { apiRoot, projectKey } = require("./client.js");
 
 
-const testQuery = `
-query {
-    orders {
-      results {
-        customer {
-          email
-        }
-        lineItems {
-          nameAllLocales {
-            value
-          }
-        }
-        totalPrice {
-          centAmount
-        }
-      }
-    }
-  }
-  `;
-
-module.exports.getCustomerWithOrders = () =>apiRoot.withProjectKey({projectKey}).graphql().post({
+module.exports.getCustomerWithOrders = (query) =>apiRoot.withProjectKey({projectKey}).graphql().post({
     body:{
-        query:testQuery,
+        query,
         variables:{}
     }
 }).execute();
