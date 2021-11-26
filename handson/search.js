@@ -19,14 +19,16 @@ module.exports.simulateSearch = () =>
     })
     .execute();
 
-module.exports.simulatePagination = async (perPage, page) =>
+module.exports.simulatePagination = async (perPage, where) =>
   apiRoot
     .withProjectKey({ projectKey })
     .products()
     .get({
-      queryArgs: {      
+      queryArgs: {     
+        sort: "id asc", 
         limit: perPage,
-        offset: perPage * (page - 1),
+        where: where,
+        withTotal: false
       },
     })
     .execute();
