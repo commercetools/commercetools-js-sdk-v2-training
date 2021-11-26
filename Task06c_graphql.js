@@ -1,4 +1,4 @@
-const {getCustomerWithOrders} = require ('./handson/graphql');
+const {getGraphQLResults} = require ('./handson/graphql');
 const { log } = require("./logger");
 
 const testQuery = `
@@ -21,4 +21,4 @@ query {
   }
   `;
 
-getCustomerWithOrders(testQuery).then(log).catch(log)
+  getGraphQLResults(testQuery).then(log).catch(log)

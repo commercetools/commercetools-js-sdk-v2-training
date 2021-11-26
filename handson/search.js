@@ -6,4 +6,4 @@ module.exports.getAllProducts = () =>{}
 // filter facet recalculates others only
 module.exports.simulateSearch = () =>{}
 
-module.exports.simulatePagination = async (perPage, page) =>{}
+module.exports.simulatePagination = async (perPage, where) =>{}
