@@ -1,13 +1,3 @@
-// const {
-//   createAuthMiddlewareForClientCredentialsFlow,
-//   createAuthMiddlewareForPasswordFlow,
-// } = require("@commercetools/sdk-middleware-auth");
-// const { createHttpMiddleware } = require("@commercetools/sdk-middleware-http");
-// const { createClient } = require("@commercetools/sdk-client");
-// const {
-//   createApiBuilderFromCtpClient,
-// } = require("@commercetools/typescript-sdk");
-
 const {
   createClient,
   createHttpClient,
