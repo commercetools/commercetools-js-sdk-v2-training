@@ -63,10 +63,10 @@ const getImportClient = () => {
     fetch,
   });
 
-  const ctpClient = createClient({
+  const importClient = createClient({
     middlewares: [authMiddleware, httpMiddleware],
   });
-  return ctpClient;
+  return importClient;
 };
 
 const getStoreClient = () => {
@@ -85,10 +85,10 @@ const getStoreClient = () => {
     fetch,
   });
 
-  const ctpClient = createClient({
+  const storeClient = createClient({
     middlewares: [authMiddleware, httpMiddleware],
   });
-  return ctpClient;
+  return storeClient;
 };
 
 
@@ -97,8 +97,8 @@ const getMyAPIClient = () => {
     host: "https://auth.europe-west1.gcp.commercetools.com",
     projectKey,
     credentials: {
-      clientId: process.env.myClientId,
-      clientSecret: process.env.myClientSecret,
+      clientId: process.env.ME_CLIENT_ID,
+      clientSecret: process.env.ME_CLIENT_SECRET,
       user: {
         username: "fafa2@example.com",
         password: "123",

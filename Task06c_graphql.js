@@ -2,5 +2,23 @@ const {getCustomerWithOrders} = require ('./handson/graphql');
 const { log } = require("./logger");
 
 
-
-getCustomerWithOrders().then(log).catch(log)
+const testQuery = `
+query {
+    orders {
+      results {
+        customer {
+          email
+        }
+        lineItems {
+          nameAllLocales {
+            value
+          }
+        }
+        totalPrice {
+          centAmount
+        }
+      }
+    }
+  }
+  `;
+getCustomerWithOrders(testQuery).then(log).catch(log)

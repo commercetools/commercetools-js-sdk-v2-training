@@ -70,3 +70,20 @@ module.exports.getProductsInAStore = (storeKey) =>
 //use me endpoint with another client
 module.exports.getMe = () =>
   myApiRoot.withProjectKey({ projectKey }).me().get().execute();
+
+module.exports.createInStoreCart = (storeKey,customer) =>
+    storeApiRoot
+        .withProjectKey({projectKey})
+        .inStoreKeyWithStoreKeyValue({storeKey})
+        .carts()
+        .post({
+            body: {
+                currency: "EUR",
+                customerId: customer.body.id,
+                customerEmail: customer.body.email,
+            }
+        })
+        .execute();
+
+
+ 
