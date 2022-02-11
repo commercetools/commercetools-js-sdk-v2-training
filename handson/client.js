@@ -1,12 +1,10 @@
 const {
-  createAuthMiddlewareForClientCredentialsFlow,
-  createAuthMiddlewareForPasswordFlow,
-} = require("@commercetools/sdk-middleware-auth");
-const { createHttpMiddleware } = require("@commercetools/sdk-middleware-http");
-const { createClient } = require("@commercetools/sdk-client");
-const {
-  createApiBuilderFromCtpClient,
-} = require("@commercetools/typescript-sdk");
+  createClient,
+  createHttpClient,
+  createAuthForClientCredentialsFlow,
+  createAuthForPasswordFlow
+} = require ('@commercetools/sdk-client-v2')
+const { createApiBuilderFromCtpClient } = require('@commercetools/platform-sdk')
 
 const {
   createApiBuilderFromCtpClient: createApiBuilderFromCtpClientOnlyForImports,
@@ -34,27 +32,6 @@ const getStoreClient = () => {
 const getMLClient = () => {};
 
 const getMyAPIClient = () => {
-  const authMiddleware = createAuthMiddlewareForPasswordFlow({
-    host: process.env.ME_AUTH_URL,
-    projectKey,
-    credentials: {
-      clientId: process.env.ME_CLIENT_ID,
-      clientSecret: process.env.ME_CLIENT_SECRET,
-      user: {
-        username: "test2@test.com",
-        password: "password"
-      },
-    },
-    fetch
-  });
-  const httpMiddleware = createHttpMiddleware({
-    host: process.env.ME_API_URL,
-    fetch
-  });
-  const client = createClient({
-    middlewares: [authMiddleware,httpMiddleware]
-  });
-  return client;
 
 };
 
