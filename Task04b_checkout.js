@@ -3,18 +3,18 @@ const { log } = require("./logger.js");
 
 const cartDraftData = {
   currency: "EUR",
-  customerId: "10cb16bf-a5d8-4f47-b664-fe5cae2f75d0",
+  customerId: "349fdf7c-98af-47ad-bec9-58aaaeb176b6",
   countryCode: "DE",
 };
 const paymentDraft = {
-  key:"testPayment-2",
+  key:"testPayment-44",
   amountPlanned:{
     currencyCode:'EUR',
     centAmount:4200
   },
   customer:{
     typeId:'customer',
-    id:'10cb16bf-a5d8-4f47-b664-fe5cae2f75d0'
+    id:'349fdf7c-98af-47ad-bec9-58aaaeb176b6'
   }
 }
 //checkout.createCart(cartDraftData).then(log).catch(log)

@@ -32,7 +32,7 @@ module.exports.getCartById = (ID) =>
   apiRoot.withProjectKey({ projectKey }).carts().withId({ ID }).get().execute();
 
 module.exports.addLineItemsToCart = (arrayOfSKUs, cartId) => {
-  return getCartById(cartId).then((cart) => {
+  return this.getCartById(cartId).then((cart) => {
     let updateActions = [];
     arrayOfSKUs.forEach((sku) => {
       updateActions.push({
@@ -57,7 +57,7 @@ module.exports.addLineItemsToCart = (arrayOfSKUs, cartId) => {
 };
 
 module.exports.addDiscountCodeToCart = (discountCode, cartId) => {
-  return getCartById(cartId).then((cart) => {
+  return this.getCartById(cartId).then((cart) => {
     let updateActions = [
       {
         action: "addDiscountCode",
@@ -93,7 +93,7 @@ module.exports.createOrderFromCart = (cartId) => {
 };
 
 const createOrderFromCartDraft = (cartId) => {
-  return getCartById(cartId).then((cart) => {
+  return this.getCartById(cartId).then((cart) => {
     return {
       id: cart.body.id,
       version: cart.body.version,
@@ -143,7 +143,7 @@ module.exports.createPayment = (paymentDraft) =>
     .execute();
 
 module.exports.setOrderState = (stateName, orderId) => {
-  return getOrderById(orderId).then((order) => {
+  return this.getOrderById(orderId).then((order) => {
     const updateActions = [
       {
         action: "changeOrderState",
@@ -165,7 +165,7 @@ module.exports.setOrderState = (stateName, orderId) => {
 };
 
 module.exports.addPaymentToOrder = (paymentId, orderId) => {
-  return getOrderById(orderId).then((order) => {
+  return this.getOrderById(orderId).then((order) => {
     const updateActions = [
       {
         action: "addPayment",

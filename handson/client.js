@@ -1,12 +1,20 @@
+// const {
+//   createAuthMiddlewareForClientCredentialsFlow,
+//   createAuthMiddlewareForPasswordFlow,
+// } = require("@commercetools/sdk-middleware-auth");
+// const { createHttpMiddleware } = require("@commercetools/sdk-middleware-http");
+// const { createClient } = require("@commercetools/sdk-client");
+// const {
+//   createApiBuilderFromCtpClient,
+// } = require("@commercetools/typescript-sdk");
+
 const {
-  createAuthMiddlewareForClientCredentialsFlow,
-  createAuthMiddlewareForPasswordFlow,
-} = require("@commercetools/sdk-middleware-auth");
-const { createHttpMiddleware } = require("@commercetools/sdk-middleware-http");
-const { createClient } = require("@commercetools/sdk-client");
-const {
-  createApiBuilderFromCtpClient,
-} = require("@commercetools/typescript-sdk");
+  createClient,
+  createHttpClient,
+  createAuthForClientCredentialsFlow,
+  createAuthForPasswordFlow
+} = require ('@commercetools/sdk-client-v2')
+const { createApiBuilderFromCtpClient } = require('@commercetools/platform-sdk')
 
 const {
   createApiBuilderFromCtpClient: createApiBuilderFromCtpClientOnlyForImports,
@@ -15,20 +23,20 @@ require("dotenv").config();
 
 const fetch = require("node-fetch");
 
-const projectKey = "training-fady-24-7";
+const projectKey = process.env.CTP_PROJECT_KEY;
 
 const getClient = () => {
-  const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
+  const authMiddleware = createAuthForClientCredentialsFlow({
     host: "https://auth.europe-west1.gcp.commercetools.com",
     projectKey,
     credentials: {
-      clientId: process.env.adminClientId,
-      clientSecret: process.env.adminClientSecret,
+      clientId: process.env.CTP_CLIENT_ID,
+      clientSecret: process.env.CTP_CLIENT_SECRET,
     },
     fetch,
   });
 
-  const httpMiddleware = createHttpMiddleware({
+  const httpMiddleware = createHttpClient({
     host: "https://api.europe-west1.gcp.commercetools.com",
     fetch,
   });
@@ -40,17 +48,17 @@ const getClient = () => {
 };
 
 const getImportClient = () => {
-  const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
+  const authMiddleware = createAuthForClientCredentialsFlow({
     host: "https://auth.europe-west1.gcp.commercetools.com",
     projectKey,
     credentials: {
-      clientId: process.env.importClientId,
-      clientSecret: process.env.importClientSecret,
+      clientId: process.env.CTP_CLIENT_ID,
+      clientSecret: process.env.CTP_CLIENT_SECRET,
     },
     fetch,
   });
 
-  const httpMiddleware = createHttpMiddleware({
+  const httpMiddleware = createHttpClient({
     host: "https://import.europe-west1.gcp.commercetools.com",
     fetch,
   });
@@ -62,17 +70,17 @@ const getImportClient = () => {
 };
 
 const getStoreClient = () => {
-  const authMiddleware = createAuthMiddlewareForClientCredentialsFlow({
+  const authMiddleware = createAuthForClientCredentialsFlow({
     host: "https://auth.europe-west1.gcp.commercetools.com",
     projectKey,
     credentials: {
-      clientId: process.env.storeClientId,
-      clientSecret: process.env.storeClientSecret,
+      clientId: process.env.CTP_STORE_ID2,
+      clientSecret: process.env.CTP_STORE_SECRET2,
     },
     fetch,
   });
 
-  const httpMiddleware = createHttpMiddleware({
+  const httpMiddleware = createHttpClient({
     host: "https://api.europe-west1.gcp.commercetools.com",
     fetch,
   });
@@ -83,10 +91,9 @@ const getStoreClient = () => {
   return ctpClient;
 };
 
-const getMLClient = () => {};
 
 const getMyAPIClient = () => {
-  const authMiddleware = createAuthMiddlewareForPasswordFlow({
+  const authMiddleware = createAuthForPasswordFlow({
     host: "https://auth.europe-west1.gcp.commercetools.com",
     projectKey,
     credentials: {
@@ -99,7 +106,7 @@ const getMyAPIClient = () => {
     },
     fetch,
   });
-  const httpMiddleware = createHttpMiddleware({
+  const httpMiddleware = createHttpClient({
     host: "https://api.europe-west1.gcp.commercetools.com",
     fetch,
   });

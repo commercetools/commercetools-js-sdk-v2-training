@@ -7,24 +7,21 @@
     "1": "node Task01_project_setup.js",
     "2": "node Task02_customers.js",
     "3": "node Task03_import_sync_products.js",
+    "5": "node Task05_stores.js",
+    "5b": "node Task05b_product_selections.js",
+    "7": "node Task07_extensions.js",
+    "8": "node Task08_subscriptions.js",
     "4a": "node Task04a_states.js",
     "4b": "node Task04b_checkout.js",
     "4c": "node Task04c_merging.js",
-    "5": "node Task05_stores.js",
     "6a": "node Task06a_search.js",
     "6b": "node Task06b_pagination.js",
-    "6c": "node Task06c_graphql.js",
-    "7": "node Task07_extensions.js",
-    "8": "node Task08_subscriptions.js"
+    "6c": "node Task06c_graphql.js"
   },
   "dependencies": {
-    "@commercetools/api-request-builder": "^5.6.3",
     "@commercetools/importapi-sdk": "^1.3.0",
-    "@commercetools/sdk-auth": "^3.0.9",
-    "@commercetools/sdk-client": "^2.1.2",
-    "@commercetools/sdk-middleware-auth": "^6.1.4",
-    "@commercetools/sdk-middleware-http": "^6.0.8",
-    "@commercetools/typescript-sdk": "^1.2.0",
+    "@commercetools/platform-sdk": "^2.4.1",
+    "@commercetools/sdk-client-v2": "^1.1.0",
     "chalk-animation": "^1.6.0",
     "cli-highlight": "^2.1.4",
     "csvtojson": "^2.0.10",
@@ -33,10 +30,10 @@
     "node-fetch": "^2.6.1"
   },
   "resolutions": {
-    "csvtojson/**/lodash":"^4.17.21",
-    "cli-highlight/**/y18n":"^5.0.5",
-    "chalk-animation/**/hosted-git-info":"^2.8.9",
-    "chalk-animation/**/path-parse":"1.0.7",
-    "chalk-animation/**/trim-newlines":"4.0.1"
+    "csvtojson/**/lodash": "^4.17.21",
+    "cli-highlight/**/y18n": "^5.0.5",
+    "chalk-animation/**/hosted-git-info": "^2.8.9",
+    "chalk-animation/**/path-parse": "1.0.7",
+    "chalk-animation/**/trim-newlines": "4.0.1"
   }
 }
