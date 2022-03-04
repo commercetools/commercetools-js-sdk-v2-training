@@ -1,79 +1,55 @@
-const { apiRoot, storeApiRoot, myApiRoot, projectKey } = require("./client.js");
+const { apiRoot, storeApiRoot, projectKey } = require("./client.js");
 
-//TODO store and me endpoint
+//TODO store and productProjection endpoint
+
+module.exports.getStoreByKey = (key) =>
+  apiRoot.withProjectKey({projectKey})
+    .stores()
+    .withKey({key})
+    .get()
+    .execute();
 
 module.exports.getCustomersInStore = (storeKey) =>
-  storeApiRoot
-    .withProjectKey({ projectKey })
+  storeApiRoot.withProjectKey({ projectKey })
     .inStoreKeyWithStoreKeyValue({ storeKey })
     .customers()
     .get()
     .execute();
 
-module.exports.getSelectionByKey = (key) =>
-  apiRoot
-    .withProjectKey({ projectKey })
-    .productSelections()
-    .withKey({ key })
-    .get()
-    .execute();
+module.exports.addProductSelectionToStore = async (storeKey, productSelectionKey) => {
+  const store = await this.getStoreByKey(storeKey);
 
-module.exports.addProductsToSelection = async (
-  selectionKey,
-  arrayOfProductKeys
-) => {
-  const prdoductSelection = await this.getSelectionByKey(selectionKey);
-  const actions = arrayOfProductKeys.map((key) => {
-    return {
-      action: "addProduct",
-      product: {
-        typeId: "product",
-        key,
-      },
-    };
-  });
-  return apiRoot
-    .withProjectKey({ projectKey })
-    .productSelections()
-    .withKey({ key: selectionKey })
-    .post({
-      body: {
-        version: prdoductSelection.body.version,
-        actions,
-      },
-    })
+  return apiRoot.withProjectKey({projectKey})
+    .stores()
+    .withKey({key: storeKey})
+    .post(
+      {body: {
+        version: store.body.version,
+        actions: [
+          {
+            action: "setProductSelections",
+            productSelections: [
+              {
+                productSelection: {key: productSelectionKey},
+                active: true
+              }
+            ]
+          }
+        ]
+      }}
+    )
     .execute();
-};
+}
 
-module.exports.getProductsInASelection = (selectionKey) =>
-  apiRoot
-    .withProjectKey({ projectKey })
-    .productSelections()
-    .withKey({ key: selectionKey })
-    .products()
-    .get({
-      queryArgs:{
-        expand:'product'
-      }
-    })
-    .execute();
-
-module.exports.getProductsInAStore = (storeKey) =>
-  storeApiRoot
-    .withProjectKey({ projectKey })
+module.exports.getProductsInStore = (storeKey) =>
+  apiRoot.withProjectKey({ projectKey })
     .inStoreKeyWithStoreKeyValue({ storeKey })
     .productSelectionAssignments()
     .get()
     .execute();
 
-
-//use me endpoint with another client
-module.exports.getMe = () =>
-  myApiRoot.withProjectKey({ projectKey }).me().get().execute();
-
-module.exports.createInStoreCart = (storeKey,customer) =>
-    storeApiRoot
-        .withProjectKey({projectKey})
+module.exports.createInStoreCart = (storeKey, customer) =>
+    storeApiRoot.withProjectKey({projectKey})
         .inStoreKeyWithStoreKeyValue({storeKey})
         .carts()
         .post({

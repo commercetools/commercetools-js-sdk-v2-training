@@ -17,7 +17,7 @@ const projectKey = process.env.CTP_PROJECT_KEY;
 
 const getClient = () => {
   const authMiddleware = createAuthForClientCredentialsFlow({
-    host: "https://auth.europe-west1.gcp.commercetools.com",
+    host: process.env.CTP_AUTH_URL,
     projectKey,
     credentials: {
       clientId: process.env.CTP_CLIENT_ID,
@@ -27,7 +27,7 @@ const getClient = () => {
   });
 
   const httpMiddleware = createHttpClient({
-    host: "https://api.europe-west1.gcp.commercetools.com",
+    host: process.env.CTP_API_URL,
     fetch,
   });
 
@@ -39,17 +39,17 @@ const getClient = () => {
 
 const getImportClient = () => {
   const authMiddleware = createAuthForClientCredentialsFlow({
-    host: "https://auth.europe-west1.gcp.commercetools.com",
+    host: process.env.IMPORT_AUTH_URL,
     projectKey,
     credentials: {
-      clientId: process.env.CTP_CLIENT_ID,
-      clientSecret: process.env.CTP_CLIENT_SECRET,
+      clientId: process.env.IMPORT_CLIENT_ID,
+      clientSecret: process.env.IMPORT_CLIENT_SECRET,
     },
     fetch,
   });
 
   const httpMiddleware = createHttpClient({
-    host: "https://import.europe-west1.gcp.commercetools.com",
+    host: process.env.IMPORT_API_URL,
     fetch,
   });
 
@@ -61,17 +61,17 @@ const getImportClient = () => {
 
 const getStoreClient = () => {
   const authMiddleware = createAuthForClientCredentialsFlow({
-    host: "https://auth.europe-west1.gcp.commercetools.com",
+    host: process.env.STORE_AUTH_URL,
     projectKey,
     credentials: {
-      clientId: process.env.CTP_STORE_ID2,
-      clientSecret: process.env.CTP_STORE_SECRET2,
+      clientId: process.env.STORE_CLIENT_ID,
+      clientSecret: process.env.STORE_CLIENT_SECRET,
     },
     fetch,
   });
 
   const httpMiddleware = createHttpClient({
-    host: "https://api.europe-west1.gcp.commercetools.com",
+    host: process.env.STORE_API_URL,
     fetch,
   });
 
@@ -84,20 +84,20 @@ const getStoreClient = () => {
 
 const getMyAPIClient = () => {
   const authMiddleware = createAuthForPasswordFlow({
-    host: "https://auth.europe-west1.gcp.commercetools.com",
+    host: process.env.ME_AUTH_URL,
     projectKey,
     credentials: {
       clientId: process.env.ME_CLIENT_ID,
       clientSecret: process.env.ME_CLIENT_SECRET,
       user: {
-        username: "fafa2@example.com",
-        password: "123",
+        username: "nage@test.com",
+        password: "password",
       },
     },
     fetch,
   });
   const httpMiddleware = createHttpClient({
-    host: "https://api.europe-west1.gcp.commercetools.com",
+    host: process.env.ME_API_URL,
     fetch,
   });
 
