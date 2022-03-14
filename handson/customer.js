@@ -8,8 +8,6 @@ const createCustomerDraft = (customerData) => {}
 
 module.exports.createCustomer = (customerData) =>{}
 
-const createCustomerDraftKey = (customerData) => {};
-
 module.exports.createCustomerKeyVerfiedEmail = (customerData) =>{}
 
 module.exports.assignCustomerToCustomerGroup = (
