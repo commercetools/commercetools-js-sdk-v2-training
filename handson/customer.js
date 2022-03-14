@@ -49,8 +49,6 @@ module.exports.createCustomer = (customerData) =>
     })
     .execute();
 
-const createCustomerDraftKey = (customerData) => {};
-
 module.exports.createCustomerKeyVerfiedEmail = (customerData) =>
   apiRoot
     .withProjectKey({ projectKey })
@@ -58,7 +56,6 @@ module.exports.createCustomerKeyVerfiedEmail = (customerData) =>
     .post({
       body: {
         ...createCustomerDraft(customerData),
-        ...createCustomerDraftKey(customerData),
         isEmailVerified: true,
       },
     })
