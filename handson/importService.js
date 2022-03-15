@@ -57,17 +57,17 @@ const getProductDraftsArray = () => {
         productDraftsArray.push({
           key: participantNamePrefix + "-" + product.productName,
           name: {
-            "de-DE": product.productName,
+            "de": product.productName,
           },
           productType: {
             typeId: "product-type",
             key: product.productType,
           },
           slug: {
-            "de-DE": participantNamePrefix + "-" + product.productName,
+            "de": participantNamePrefix + "-" + product.productName,
           },
           description: {
-            "de-DE": product.description,
+            "de": product.productDescription,
           },
           masterVariant: {
             sku: product.inventoryId,
