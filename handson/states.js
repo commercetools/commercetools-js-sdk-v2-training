@@ -16,4 +16,4 @@ module.exports.getStateByKey = (key) =>{}
 
 module.exports.getStateById = (ID) =>{}
 
-module.exports.addTransition = (stateId, transitionStateId) => {}
+module.exports.addTransition = (stateId, transitionStateIds) => {}
