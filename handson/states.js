@@ -35,16 +35,16 @@ module.exports.getStateById = (ID) =>
     .get()
     .execute();
 
-module.exports.addTransition = (stateId, transitionStateId) => {
-  return getStateById(stateId).then((state) => {
+module.exports.addTransition = (stateId, transitionStateIds) => {
+  return this.getStateById(stateId).then((state) => {
     const updateActions = [
       {
         action: "setTransitions",
-        transitions: [
-          {
+        transitions: transitionStateIds.map((transitionStateId) => {
+          return {
             id: transitionStateId,
-          },
-        ],
+          };
+        }),
       },
     ];
 

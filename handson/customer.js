@@ -49,8 +49,6 @@ module.exports.createCustomer = (customerData) =>
     })
     .execute();
 
-const createCustomerDraftKey = (customerData) => {};
-
 module.exports.createCustomerKeyVerfiedEmail = (customerData) =>
   apiRoot
     .withProjectKey({ projectKey })
