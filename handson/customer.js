@@ -56,7 +56,6 @@ module.exports.createCustomerKeyVerfiedEmail = (customerData) =>
     .post({
       body: {
         ...createCustomerDraft(customerData),
-        ...createCustomerDraftKey(customerData),
         isEmailVerified: true,
       },
     })
