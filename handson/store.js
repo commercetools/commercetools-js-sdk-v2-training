@@ -16,30 +16,25 @@ module.exports.getCustomersInStore = (storeKey) =>
     .get()
     .execute();
 
-module.exports.addProductSelectionToStore = async (storeKey, productSelectionKey) => {
-  const store = await this.getStoreByKey(storeKey);
-
-  return apiRoot.withProjectKey({projectKey})
-    .stores()
-    .withKey({key: storeKey})
-    .post(
-      {body: {
-        version: store.body.version,
-        actions: [
-          {
-            action: "setProductSelections",
-            productSelections: [
-              {
-                productSelection: {key: productSelectionKey},
-                active: true
-              }
-            ]
-          }
-        ]
-      }}
-    )
-    .execute();
-}
+module.exports.addProductSelectionToStore = async (storeKey, productSelectionKey) =>
+  this.getStoreByKey(storeKey).then((store) =>
+    apiRoot.withProjectKey({projectKey})
+      .stores()
+      .withKey({key: storeKey})
+      .post({
+        body: {
+          version: store.body.version,
+          actions: [
+            {
+              action: "addProductSelection",
+              productSelection: { key: productSelectionKey},
+              active: true      
+            }
+          ]
+        }
+      })
+      .execute()
+  )
 
 module.exports.getProductsInStore = (storeKey) =>
   apiRoot.withProjectKey({ projectKey })
@@ -57,6 +52,7 @@ module.exports.createInStoreCart = (storeKey, customer) =>
                 currency: "EUR",
                 customerId: customer.body.id,
                 customerEmail: customer.body.email,
+                store: {key: storeKey}
             }
         })
         .execute();

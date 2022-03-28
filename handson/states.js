@@ -35,31 +35,23 @@ module.exports.getStateById = (ID) =>
     .get()
     .execute();
 
-module.exports.addTransition = (stateId, transitionStateIds) => {
-  return this.getStateById(stateId).then((state) => {
-    const updateActions = [
-      {
-        action: "setTransitions",
-        transitions: transitionStateIds.map((transitionStateId) => {
-          return {
-            id: transitionStateId,
-          };
-        }),
-      },
-    ];
-
-    return apiRoot
-      .withProjectKey({ projectKey })
+module.exports.addTransition = (stateId, transitionStateIds) => 
+  this.getStateById(stateId).then((state) =>
+    apiRoot.withProjectKey({projectKey})
       .states()
-      .withId({
-        ID: state.body.id,
-      })
+      .withId({ID: state.body.id})
       .post({
         body: {
-          actions: updateActions,
           version: state.body.version,
-        },
+          actions: [
+            {
+              action:"setTransitions",
+              transitions: transitionStateIds.map((transitionStateId) => {
+                  return {id: transitionStateId};
+                })
+            }
+          ]
+        }
       })
-      .execute();
-  });
-};
+      .execute()
+  )

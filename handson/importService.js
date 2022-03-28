@@ -18,8 +18,17 @@ module.exports.checkImportSummary = (importContainerKey) =>
       .importSummaries()
       .get()
       .execute();
-      
-module.exports.checkImportOperationStatus = (id) =>
+
+module.exports.checkImportOperationsStatus = (importContainerKey) =>
+  importApiRoot
+    .withProjectKeyValue({ projectKey })
+    .importContainers()
+    .withImportContainerKeyValue({importContainerKey})
+    .importOperations()
+    .get( { queryArgs: { debug: true } } )
+    .execute();
+
+module.exports.checkImportOperationStatusById = (id) =>
   importApiRoot
     .withProjectKeyValue({ projectKey })
     .importOperations()

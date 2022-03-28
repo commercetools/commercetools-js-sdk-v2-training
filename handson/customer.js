@@ -37,6 +37,7 @@ const createCustomerDraft = (customerData) => {
       },
     ],
     defaultShippingAddress: 0,
+    defaultBillingAddress: 0,
   };
 };
 
@@ -49,18 +50,32 @@ module.exports.createCustomer = (customerData) =>
     })
     .execute();
 
-module.exports.createCustomerKeyVerfiedEmail = (customerData) =>
+module.exports.createCustomerToken = (customer) =>
   apiRoot
     .withProjectKey({ projectKey })
     .customers()
+    .emailToken()
     .post({
       body: {
-        ...createCustomerDraft(customerData),
-        isEmailVerified: true,
+        id: customer.body.id,
+        ttlMinutes: 60,
+        version: customer.body.version
       },
     })
     .execute();
 
+module.exports.confirmCustomerEmail = (token) =>
+  apiRoot
+    .withProjectKey({ projectKey })
+    .customers()
+    .emailConfirm()
+    .post({
+      body: {
+        tokenValue: token.body.value
+      },
+    })
+    .execute();
+        
 module.exports.assignCustomerToCustomerGroup = (
   customerKey,
   customerGroupKey

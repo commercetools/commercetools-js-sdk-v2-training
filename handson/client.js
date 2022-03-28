@@ -90,7 +90,7 @@ const getMyAPIClient = () => {
       clientId: process.env.ME_CLIENT_ID,
       clientSecret: process.env.ME_CLIENT_SECRET,
       user: {
-        username: "nage@test.com",
+        username: "test@test.com",
         password: "password",
       },
     },

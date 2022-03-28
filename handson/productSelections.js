@@ -24,29 +24,24 @@ module.exports.createProductSelection = (key,name) =>
 module.exports.addProductsToProductSelection = async (
   productSelectionKey,
   arrayOfProductKeys
-) => {
-  const prdoductSelection = await this.getProductSelectionByKey(productSelectionKey);
-  const actions = arrayOfProductKeys.map((key) => {
-    return {
-      action: "addProduct",
-      product: {
-        typeId: "product",
-        key,
-      },
-    };
-  });
-  return apiRoot.withProjectKey({ projectKey })
+) => 
+  this.getProductSelectionByKey(productSelectionKey).then((productSelection) =>
+    apiRoot.withProjectKey({projectKey})
     .productSelections()
-    .withKey({ key: productSelectionKey })
+    .withKey({key: productSelectionKey})
     .post({
       body: {
-        version: prdoductSelection.body.version,
-        actions,
-      },
+        version: productSelection.body.version,
+        actions: arrayOfProductKeys.map((productKey) => {
+          return {
+            action: "addProduct",
+            product: {key: productKey}
+          }
+        })
+      }
     })
-    .execute();
-};
-
+    .execute()
+  )
 module.exports.getProductsInProductSelection = (productSelectionKey) =>
   apiRoot.withProjectKey({ projectKey })
     .productSelections()
