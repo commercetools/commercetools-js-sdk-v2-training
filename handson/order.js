@@ -1,26 +1,26 @@
 const { apiRoot, projectKey } = require("./client.js");
+const { getCustomerByKey } = require( "./customer.js" );
 
-module.exports.createCart = (cartDraftData) =>{}
+module.exports.createCart = (customerKey) => {}
 
-const createCartDraft = (cartDraftData) => {
-  const { currency, customerId, countryCode } = cartDraftData;
+module.exports.createAnonymousCart = () =>
+  apiRoot.withProjectKey({ projectKey })
+    .carts()
+    .post({
+      body: {
+        currency: "EUR",
+        country: "DE",
+      }
+    })
+    .execute()
 
-  return {
-    currency,
-    customerId,
-    shippingAddress: {
-      country: countryCode,
-    },
-  };
-};
+module.exports.customerSignIn = (customerDetails) => {}
 
-module.exports.customerSignIn = (customerDetails) =>{}
+module.exports.getCartById = (ID) => {}
 
-module.exports.getCartById = (ID) =>{}
+module.exports.addLineItemsToCart = (cartId, arrayOfSKUs) => {}
 
-module.exports.addLineItemsToCart = (arrayOfSKUs, cartId) => {}
-
-module.exports.addDiscountCodeToCart = (discountCode, cartId) => {}
+module.exports.addDiscountCodeToCart = (cartId, discountCode) => {}
 
 module.exports.createOrderFromCart = (cartId) => {}
 
@@ -33,12 +33,12 @@ const createOrderFromCartDraft = (cartId) => {
   });
 };
 
-module.exports.getOrderById = (ID) =>{}
+module.exports.getOrderById = (ID) => {}
 
-module.exports.updateOrderCustomState = (customStateId, orderId) => {}
+module.exports.updateOrderCustomState = (orderId, customStateKey) => {}
 
-module.exports.createPayment = (paymentDraft) =>{}
+module.exports.createPayment = (paymentDraft) => {}
 
-module.exports.setOrderState = (stateName, orderId) => {}
+module.exports.setOrderState = (orderId, stateName) => {}
 
-module.exports.addPaymentToOrder = (paymentId, orderId) => {}
+module.exports.addPaymentToOrder = (orderId, paymentId) => {}

@@ -1,4 +1,10 @@
-const { createImportContainer, importProducts,checkImportOperationStatus, checkImportSummary } = require("./handson/importService");
+const { 
+    createImportContainer,
+    importProducts,
+    checkImportSummary,
+    checkImportOperations, 
+    checkImportOperationById
+    } = require("./handson/importService");
 const { log } = require("./logger.js");
 
 const containerKey = "ff-ImportContainer";
@@ -10,11 +16,21 @@ createImportContainer(containerKey).then(log).catch(log);
 // importProducts(containerKey).then(log).catch(log);
 
 // check import summary for your container
-//checkImportSummary(containerKey).then(log).catch(log);
+checkImportSummary(containerKey).then(log).catch(log);
+
+// check import operations for your container
+checkImportOperations(containerKey).then(operations =>
+    operations.body.results.forEach(operation =>
+        log(operation.id + " : " +operation.state)
+    )
+)
 
 // Check the status of import operations by their Ids
-// checkImportOperationStatus("2e325e01-1193-4d8a-92c9-af29da1cc0fb").then(log).catch(log);
-// checkImportOperationStatus("cd61acae-301d-4984-8dc2-2deb0ba5035c").then(log).catch(log);
+//  checkImportOperationById("2e325e01-1193-4d8a-92c9-af29da1cc0fb").then(log).catch(log);
+//  checkImportOperationById("cd61acae-301d-4984-8dc2-2deb0ba5035c").then(log).catch(log);
+
+
+
 
 // https://github.com/commercetools/commercetools-project-sync#run
 // docker run \
@@ -24,4 +40,4 @@ createImportContainer(containerKey).then(log).catch(log);
 // -e TARGET_PROJECT_KEY=xxx \
 // -e TARGET_CLIENT_ID=xxx \
 // -e TARGET_CLIENT_SECRET=xxx \
-// commercetools/commercetools-project-sync:5.0.0 -s all
+// commercetools/commercetools-project-sync:5.1.0 -s all

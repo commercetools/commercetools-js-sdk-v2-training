@@ -1,35 +1,22 @@
 const checkout = require("./handson/order");
 const { log } = require("./logger.js");
 
-const anonymousCartDraftData = {
-  currency: "EUR",
-  countryCode: "DE",
-};
-
-const customerCartDraftData = {
-  currency: "EUR",
-  customerId: "a4d4babe-769d-4d49-96c0-88777b4f5d14",
-  countryCode: "DE",
-};
+const customerKey = "";
 
 const mergingProcessTest = async () => {
-  let anonymousCart = await checkout.createCart(anonymousCartDraftData);
+  let anonymousCart = await checkout.createAnonymousCart();
 
-  let customerCart = await checkout.createCart(customerCartDraftData);
+  let customerCart = await checkout.createCart(customerKey);
 
-  anonymousCart = await checkout.addLineItemsToCart(
-    ["sku111", "sku123","sku123"],
-    anonymousCart.body.id
-  );
+  anonymousCart = await checkout.addLineItemsToCart( anonymousCart.body.id,['tulip-seed-box','tulip-seed-box','tulip-seed-box'] );
 
-  customerCart = await checkout.addLineItemsToCart(
-    ["sku123"],
-    customerCart.body.id
-  );
-  log("Anonymous Cart: " + anonymousCart.body.id); 
+  customerCart = await checkout.addLineItemsToCart( customerCart.body.id, ['tulip-seed-box','tulip-seed-sack','tulip-seed-package'] );
+
+  log("Anonymous Cart: " + anonymousCart.body.id);
   log("Customer Cart: "+ customerCart.body.id);
+
   const customerDetails = {
-    email: "test2@test.com",
+    email: "test@test.com",
     password: "password",
     anonymousCartId: anonymousCart.body.id,
     anonymousCartSignInMode: "MergeWithExistingCustomerCart", // try switching to UseAsNewActiveCustomerCart

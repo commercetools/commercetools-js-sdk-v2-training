@@ -5,4 +5,8 @@ const { log } = require("./logger");
 
 getMe().then(log).catch(log);
 
-// getMyOrders().then(log).catch(log);
+//getMyOrders().then(orders =>
+//    orders.body.results.forEach(order =>
+//        log(order.id + " : " + order.totalPrice.centAmount)
+//    )
+//).catch(log);

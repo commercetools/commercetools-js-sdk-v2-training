@@ -4,8 +4,12 @@ const { log } = require("./logger");
 
 getStoreByKey('berlin-store').then(log).catch(log);
 
-// getCustomersInStore('berlin-store').then(log).catch(log);
+getCustomersInStore('berlin-store').then(customers => {
+    log(customers.body.count);
+    customers.body.results.forEach(customer =>
+        log(customer.id)
+    )}).catch(log);
 
-// getCustomerByKey("nage1223").then((customer) => {
+// getCustomerByKey("test123").then((customer) => {
 //    createInStoreCart("berlin-store",customer).then(log).catch(log);
 // }).catch(log);

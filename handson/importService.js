@@ -5,9 +5,11 @@ module.exports.createImportContainer = (key) =>{}
 
 module.exports.checkImportSummary = (importContainerKey) => {}
 
-module.exports.checkImportOperationStatus = (id) =>{}
+module.exports.checkImportOperations = (importContainerKey) => {}
 
-module.exports.importProducts = async (importContainerKey) =>{}
+module.exports.checkImportOperationById = (id) => {}
+
+module.exports.importProducts = async (importContainerKey) => {}
 
 const createImportProductsDraft = async () => {
   return {

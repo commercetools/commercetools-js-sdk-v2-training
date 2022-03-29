@@ -7,7 +7,7 @@ const {log} = require('./logger');
 // changes
 
 const sampleSubscriptionDraft = {
-   key:'subscriptionSampleForSendingConfirmationEmails',
+   key:'subscriptionSample',
    destination:{
        type:'GoogleCloudPubSub',
        projectId:"ct-support",

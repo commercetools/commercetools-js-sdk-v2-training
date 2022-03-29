@@ -7,13 +7,13 @@ module.exports.getStoreByKey = (key) =>
     .stores()
     .withKey({key})
     .get()
-    .execute();
+    .execute()
 
 
-module.exports.getCustomersInStore = (storeKey) => {};
+module.exports.getCustomersInStore = (storeKey) => {}
 
 module.exports.addProductSelectionToStore = async (storeKey, productSelectionKey) => {}
 
-module.exports.getProductsInAStore = (storeKey) => {};
+module.exports.getProductsInStore = (storeKey) => {}
 
 module.exports.createInStoreCart = (storeKey, customer) => {}

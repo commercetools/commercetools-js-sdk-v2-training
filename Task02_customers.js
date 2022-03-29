@@ -2,26 +2,31 @@ const {
   createCustomer,
   getCustomerById,
   getCustomerByKey,
-  createCustomerKeyVerfiedEmail,
+  createCustomerToken,
+  confirmCustomerEmail,
   assignCustomerToCustomerGroup,
 } = require("./handson/customer");
 const { log } = require("./logger.js");
 
 const customerDraftData = {
-  firstName: "test2",
+  firstName: "test",
   lastName: "test",
-  email: "test2@test.com",
+  email: "test@test.com",
   password: "password",
-  key: "test1233",
+  key: "test123",
   countryCode: "DE",
 };
 
-createCustomer(customerDraftData).then(log).catch(log);
+// createCustomer(customerDraftData).then(log).catch(log);
 
-//getCustomerByKey('test123').then(log).catch(log);
+// getCustomerByKey('test123').then(log).catch(log);
 
-//getCustomerById("10cb16bf-a5d8-4f47-b664-fe5cae2f75d0").then(log).catch(log);
+// getCustomerById("a303f0e7-8535-4784-a638-e59f05208355").then(log).catch(log);
 
-// createCustomerKeyVerfiedEmail(customerDraftData).then(log).catch(log);
+// getCustomerByKey('test123')
+//   .then(createCustomerToken)
+//   .then(confirmCustomerEmail)
+//   .then(log)
+//   .catch(log);
 
-//assignCustomerToCustomerGroup('test123','indoor-customers').then(log).catch(log);
+assignCustomerToCustomerGroup('test123','indoor-customers').then(log).catch(log);

@@ -9,11 +9,11 @@ module.exports.getProductSelectionByKey = (key) =>
     .get()
     .execute();
 
-module.exports.createProductSelection = (key,name) => {}
+module.exports.createProductSelection = (key, name) => {}
 
 module.exports.addProductsToProductSelection = async (
   productSelectionKey,
   arrayOfProductKeys
-) => {};
+) => {}
 
 module.exports.getProductsInProductSelection = (productSelectionKey) => {}

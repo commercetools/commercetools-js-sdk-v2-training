@@ -1,6 +1,11 @@
 const { apiRoot, projectKey } = require("./client.js");
 
-module.exports.createCustomType = (typeDraftData) =>{}
+module.exports.createCustomType = (typeDraftData) =>
+  apiRoot
+    .withProjectKey({ projectKey })
+    .types()
+    .post({ body: createTypeDraft(typeDraftData) })
+    .execute();
 
 
 const createTypeDraft = (typeDraftData) => {
