@@ -16,14 +16,14 @@ createImportContainer(containerKey).then(log).catch(log);
 // importProducts(containerKey).then(log).catch(log);
 
 // check import summary for your container
-checkImportSummary(containerKey).then(log).catch(log);
+// checkImportSummary(containerKey).then(log).catch(log);
 
 // check import operations for your container
-checkImportOperations(containerKey).then(operations =>
-    operations.body.results.forEach(operation =>
-        log(operation.id + " : " +operation.state)
-    )
-)
+// checkImportOperations(containerKey).then(operations =>
+//    operations.body.results.forEach(operation =>
+//        log(operation.id + " : " +operation.state)
+//    )
+// )
 
 // Check the status of import operations by their Ids
 //  checkImportOperationById("2e325e01-1193-4d8a-92c9-af29da1cc0fb").then(log).catch(log);
@@ -40,4 +40,4 @@ checkImportOperations(containerKey).then(operations =>
 // -e TARGET_PROJECT_KEY=xxx \
 // -e TARGET_CLIENT_ID=xxx \
 // -e TARGET_CLIENT_SECRET=xxx \
-// commercetools/commercetools-project-sync:5.1.0 -s all
+// commercetools/commercetools-project-sync:5.1.2 -s all

@@ -14,7 +14,7 @@ const paymentDraft = {
 }
 
 // create a cart and update the catId variable
-// checkout.createCart(customerKey).then(log).catch(log);
+ checkout.createCart(customerKey).then(log).catch(log);
 
 // checkout.addLineItemsToCart(cartId,['tulip-seed-box','tulip-seed-sack']).then(log).catch(log);
 
@@ -24,7 +24,7 @@ const paymentDraft = {
 // create order from cart and update the orderId
 // checkout.createOrderFromCart(cartId).then(log).catch(log);
 
-//checkout.getOrderById(orderId).then(log).catch(log);
+// checkout.getOrderById(orderId).then(log).catch(log);
 
 // set order state to confirmed and custom workflow state to order packed
 // checkout.setOrderState(orderId, 'Confirmed').then(log).catch(log);
@@ -53,4 +53,4 @@ const checkoutProcess = async () => {
   }
 };
 
-checkoutProcess().then(log).catch(log);
+// checkoutProcess().then(log).catch(log);

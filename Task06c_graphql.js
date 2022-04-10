@@ -1,7 +1,8 @@
-const {getGraphQLResults} = require ('./handson/graphql');
+const { apiRoot, projectKey } = require("./handson/client.js");
 const { log } = require("./logger");
 
-const testQuery = `
+
+const query = `
 query {
     orders {
       results {
@@ -21,4 +22,4 @@ query {
   }
   `;
 
-  getGraphQLResults(testQuery).then(log).catch(log)
+  // TODO: POST GraphQL query

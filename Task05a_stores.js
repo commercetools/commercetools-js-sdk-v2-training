@@ -2,7 +2,7 @@ const {getStoreByKey, getCustomersInStore, createInStoreCart } = require("./hand
 const { getCustomerByKey } = require("./handson/customer");
 const { log } = require("./logger");
 
-getStoreByKey('berlin-store').then(log).catch(log);
+// getStoreByKey('berlin-store').then(log).catch(log);
 
 getCustomersInStore('berlin-store').then(customers => {
     log(customers.body.count);

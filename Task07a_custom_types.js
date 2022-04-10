@@ -1,16 +1,16 @@
-const {createCustomType} = require('./handson/customTypes');
+const { apiRoot, projectKey } = require("./handson/client.js");
 const {log} = require('./logger');
 
 
-const sampleTypeDraftData = {
+const typeDraft = {
     key:'ff-allowed-to-place-orders',
     name:{
-        "de":'ff-allowed-to-place-orders',
-        "en":'ff-allowed-to-place-orders'
+        "de":'ff allowed to place orders',
+        "en":'ff allowed to place orders'
     },
     description:{
-        "de":'allowed-to-place-orders',
-        "en":'allowed-to-place-orders'
+        "de":'allow a customer to place orders',
+        "en":'allow a customer to place orders'
     },
     resourceTypeIds:['customer'],
     fieldDefinitions:[{
@@ -26,4 +26,4 @@ const sampleTypeDraftData = {
     }]
 }
 
-createCustomType(sampleTypeDraftData).then(log).catch(log);
+// TODO : CREATE the custom type

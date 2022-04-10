@@ -12,7 +12,7 @@ const {
 const { log } = require("./logger");
 const productSelectionKey = "ff-berlin-store-selection";
 
- createProductSelection(productSelectionKey,"Berlin Store Selection").then(log).catch(log);
+ createProductSelection(productSelectionKey,"FF Berlin Store Selection").then(log).catch(log);
 
 // getProductSelectionByKey(productSelectionKey).then(log).catch(log);
 
@@ -22,4 +22,4 @@ const productSelectionKey = "ff-berlin-store-selection";
 
 // getProductsInProductSelection(productSelectionKey).then(log).catch(log);
 
-getProductsInStore("berlin-store").then(log).catch(log);
+// getProductsInStore("berlin-store").then(log).catch(log);

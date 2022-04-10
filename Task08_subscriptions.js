@@ -1,4 +1,4 @@
-const {createSubscription} = require('./handson/subscriptions');
+const { apiRoot, projectKey } = require("./handson/client.js");
 const {log} = require('./logger');
 
 // key - String - Optional - User-specific unique identifier for the subscription
@@ -6,7 +6,7 @@ const {log} = require('./logger');
 // messages - Array of MessageSubscription - Optional - The messages to be subscribed to.
 // changes
 
-const sampleSubscriptionDraft = {
+const subscriptionDraft = {
    key:'subscriptionSample',
    destination:{
        type:'GoogleCloudPubSub',
@@ -20,4 +20,4 @@ const sampleSubscriptionDraft = {
    
 }
 
-createSubscription(sampleSubscriptionDraft).then(log).catch(log);
+// TODO : CREATE the subscription

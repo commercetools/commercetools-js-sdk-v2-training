@@ -17,7 +17,7 @@ const customerDraftData = {
   countryCode: "DE",
 };
 
-// createCustomer(customerDraftData).then(log).catch(log);
+ createCustomer(customerDraftData).then(log).catch(log);
 
 // getCustomerByKey('test123').then(log).catch(log);
 
@@ -29,4 +29,4 @@ const customerDraftData = {
 //   .then(log)
 //   .catch(log);
 
-assignCustomerToCustomerGroup('test123','indoor-customers').then(log).catch(log);
+//assignCustomerToCustomerGroup('test123','indoor-customers').then(log).catch(log);
