@@ -40,7 +40,12 @@ module.exports.getProductsInStore = (storeKey) =>
   apiRoot.withProjectKey({ projectKey })
     .inStoreKeyWithStoreKeyValue({ storeKey })
     .productSelectionAssignments()
-    .get()
+    .get({
+      queryArgs: {
+        expand: "product",
+        expand: "productSelection"
+      }
+    })
     .execute();
 
 module.exports.createInStoreCart = (storeKey, customer) =>

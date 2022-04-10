@@ -1,9 +1,9 @@
-const {createCustomObject, getCustomObjectByContainerAndKey} = require('./handson/customObjects');
+const { apiRoot, projectKey } = require("./handson/client.js");
 const {log} = require('./logger');
 
 
 
-const sampleCustomObjectDraftData = {
+const customObjectDraft = {
     container: "compatibility-info",
     key:'tulip-seed-product',
     value: {
@@ -18,6 +18,20 @@ const sampleCustomObjectDraftData = {
 
 }
 
-createCustomObject(sampleCustomObjectDraftData).then(log).catch(log);
+apiRoot
+    .withProjectKey({ projectKey })
+    .customObjects()
+    .post({ body: customObjectDraft })
+    .execute()
+.then(log).catch(log);
 
-// getCustomObjectByContainerAndKey("compatibility-info","tulip-seed-product").then(log).catch(log);
+// apiRoot
+//     .withProjectKey({ projectKey })
+//     .customObjects()
+//     .withContainerAndKey({
+//         container: "compatibility-info",
+//         key: "tulip-seed-product"
+//     })
+//     .get()
+//     .execute()
+// .then(log).catch(log);

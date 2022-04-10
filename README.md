@@ -19,5 +19,8 @@ example
 - yarn 4c 
 - yarn 6b
 
+The following (or later) must be installed before the TypeScript SDK can be used:
+- Node v12.22.7
+- npm v6 OR yarn v1.22.17
 
 for questions email training@commercetools.com

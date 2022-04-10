@@ -1,9 +1,9 @@
-const {createExtension} = require('./handson/extensions');
+const { apiRoot, projectKey } = require("./handson/client.js");
 const {log} = require('./logger');
 
 
 
-const sampleExtensionDraft = {
+const extensionDraft = {
     key:'orderChecker',
     destination:{
         type:'HTTP',
@@ -15,4 +15,10 @@ const sampleExtensionDraft = {
     }]
 }
 
-createExtension(sampleExtensionDraft).then(log).catch(log);
+apiRoot
+    .withProjectKey({ projectKey })
+    .extensions()
+    .post({ body: extensionDraft })
+    .execute()
+.then(log).catch(log)
+

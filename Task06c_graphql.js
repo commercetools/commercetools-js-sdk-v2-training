@@ -1,8 +1,8 @@
-const {getCustomerWithOrders} = require ('./handson/graphql');
+const { apiRoot, projectKey } = require("./handson/client.js");
 const { log } = require("./logger");
 
 
-const testQuery = `
+const query = `
 query {
     orders {
       results {
@@ -21,4 +21,13 @@ query {
     }
   }
   `;
-getCustomerWithOrders(testQuery).then(log).catch(log)
+  
+apiRoot.withProjectKey({projectKey})
+  .graphql()
+  .post({
+      body:{
+          query,
+          variables:{}
+      }
+  }).execute()
+.then(log).catch(log)
