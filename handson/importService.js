@@ -1,60 +1,55 @@
-const { importApiRoot, projectKey } = require("./client.js");
+const { importApiRoot } = require("./client");
 const csvtojsonV2 = require("csvtojson");
 
 module.exports.createImportContainer = (key) =>
   importApiRoot
-    .withProjectKeyValue({ projectKey })
     .importContainers()
     .post({
-      body: {key},
+      body: { key },
     })
     .execute();
 
 module.exports.checkImportSummary = (importContainerKey) =>
-    importApiRoot
-      .withProjectKeyValue({projectKey})
-      .importContainers()
-      .withImportContainerKeyValue({importContainerKey})
-      .importSummaries()
-      .get()
-      .execute();
+  importApiRoot
+    .importContainers()
+    .withImportContainerKeyValue({ importContainerKey })
+    .importSummaries()
+    .get()
+    .execute();
 
 module.exports.checkImportOperationsStatus = (importContainerKey) =>
   importApiRoot
-    .withProjectKeyValue({ projectKey })
     .importContainers()
-    .withImportContainerKeyValue({importContainerKey})
+    .withImportContainerKeyValue({ importContainerKey })
     .importOperations()
-    .get( { queryArgs: { debug: true } } )
+    .get({ queryArgs: { debug: true } })
     .execute();
 
 module.exports.checkImportOperationStatusById = (id) =>
   importApiRoot
-    .withProjectKeyValue({ projectKey })
     .importOperations()
-    .withIdValue({id})
+    .withIdValue({ id })
     .get()
     .execute();
 
 module.exports.importProducts = async (importContainerKey) =>
   importApiRoot
-    .withProjectKeyValue({ projectKey })
     .productDrafts()
     .importContainers()
-    .withImportContainerKeyValue({importContainerKey})
+    .withImportContainerKeyValue({ importContainerKey })
     .post({
-      body: await createImportProductsDraft(),
+      body: await createProductDraftImportRequest(),
     })
     .execute();
 
-const createImportProductsDraft = async () => {
+const createProductDraftImportRequest = async () => {
   return {
     type: "product-draft",
-    resources: await getProductDraftsArray(),
+    resources: await getProductDraftImportArray(),
   };
 };
 
-const getProductDraftsArray = () => {
+const getProductDraftImportArray = () => {
   // get data from csv
   // create product drafts array and send it back
   let productDraftsArray = [];
@@ -66,17 +61,20 @@ const getProductDraftsArray = () => {
         productDraftsArray.push({
           key: participantNamePrefix + "-" + product.productName,
           name: {
-            "de": product.productName,
+            en: product.productName,
+            de: product.productName,
           },
           productType: {
             typeId: "product-type",
             key: product.productType,
           },
           slug: {
-            "de": participantNamePrefix + "-" + product.productName,
+            en: participantNamePrefix + "-" + product.productName,
+            de: participantNamePrefix + "-" + product.productName,
           },
           description: {
-            "de": product.productDescription,
+            en: product.productDescription,
+            de: product.productDescription,
           },
           masterVariant: {
             sku: product.inventoryId,

@@ -1,119 +1,233 @@
-const {
-  createClient,
-  createHttpClient,
-  createAuthForClientCredentialsFlow,
-  createAuthForPasswordFlow
-} = require ('@commercetools/sdk-client-v2')
-const { createApiBuilderFromCtpClient } = require('@commercetools/platform-sdk')
 
-const {
-  createApiBuilderFromCtpClient: createApiBuilderFromCtpClientOnlyForImports,
-} = require("@commercetools/importapi-sdk");
-require("dotenv").config();
-
+const { ClientBuilder } = require("@commercetools/sdk-client-v2");
+const { createApiBuilderFromCtpClient } = require("@commercetools/platform-sdk");
+const { createApiBuilderFromCtpClient: createImportApiBuilderFromCtpClient } = require("@commercetools/importapi-sdk");
 const fetch = require("node-fetch");
+const env = require("dotenv");
 
-const projectKey = process.env.CTP_PROJECT_KEY;
 
-const getClient = () => {
-  const authMiddleware = createAuthForClientCredentialsFlow({
-    host: process.env.CTP_AUTH_URL,
-    projectKey,
-    credentials: {
-      clientId: process.env.CTP_CLIENT_ID,
-      clientSecret: process.env.CTP_CLIENT_SECRET,
-    },
-    fetch,
-  });
+env.config();
 
-  const httpMiddleware = createHttpClient({
-    host: process.env.CTP_API_URL,
-    fetch,
-  });
-
-  const ctpClient = createClient({
-    middlewares: [authMiddleware, httpMiddleware],
-  });
-  return ctpClient;
+const Prefix = {
+  DEV: "DEV",
+  IMPORT: "IMPORT",
+  STORE: "BERLIN",
+  ME: "ME",
+  STORE_ME: "BERLIN_ME"
 };
 
-const getImportClient = () => {
-  const authMiddleware = createAuthForClientCredentialsFlow({
-    host: process.env.IMPORT_AUTH_URL,
+function readConfig(prefix) {
+  return {
+    clientId: process.env[prefix + "_CLIENT_ID"] || "",
+    clientSecret: process.env[prefix + "_CLIENT_SECRET"] || "",
+    projectKey: process.env[prefix + "_PROJECT_KEY"] || "",
+    authHost: process.env[prefix + "_AUTH_URL"] || "",
+    host: process.env[prefix + "_API_URL"] || "",
+    username: process.env[prefix + "_CUSTOMER_EMAIL"] || "",
+    password: process.env[prefix + "_CUSTOMER_PASSWORD"] || "",
+    storeKey: process.env[prefix + "_STORE_KEY"] || ""
+  };
+}
+
+function createApiClient(prefix) {
+  const {
+    clientId,
+    clientSecret,
+    projectKey,
+    authHost,
+    host,
+  } = readConfig(prefix);
+
+  const authMiddlewareOptions = {
+    host: authHost,
     projectKey,
     credentials: {
-      clientId: process.env.IMPORT_CLIENT_ID,
-      clientSecret: process.env.IMPORT_CLIENT_SECRET,
+      clientId,
+      clientSecret
     },
-    fetch,
-  });
+    fetch
+  };
 
-  const httpMiddleware = createHttpClient({
-    host: process.env.IMPORT_API_URL,
-    fetch,
-  });
+  const httpMiddlewareOptions = {
+    host: host,
+    fetch
+  };
 
-  const importClient = createClient({
-    middlewares: [authMiddleware, httpMiddleware],
-  });
-  return importClient;
-};
+  const client = new ClientBuilder()
+    .withClientCredentialsFlow(authMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
 
-const getStoreClient = () => {
-  const authMiddleware = createAuthForClientCredentialsFlow({
-    host: process.env.STORE_AUTH_URL,
+  const apiRoot = createApiBuilderFromCtpClient(client)
+    .withProjectKey({ projectKey });
+
+  return apiRoot;
+}
+
+function createImportApiClient(prefix) {
+  const {
+    clientId,
+    clientSecret,
+    projectKey,
+    authHost,
+    host,
+  } = readConfig(prefix);
+
+  const authMiddlewareOptions = {
+    host: authHost,
     projectKey,
     credentials: {
-      clientId: process.env.STORE_CLIENT_ID,
-      clientSecret: process.env.STORE_CLIENT_SECRET,
+      clientId,
+      clientSecret
     },
-    fetch,
-  });
+    fetch
+  };
 
-  const httpMiddleware = createHttpClient({
-    host: process.env.STORE_API_URL,
-    fetch,
-  });
+  const httpMiddlewareOptions = {
+    host: host,
+    fetch
+  };
 
-  const storeClient = createClient({
-    middlewares: [authMiddleware, httpMiddleware],
-  });
-  return storeClient;
-};
+  const client = new ClientBuilder()
+    .withClientCredentialsFlow(authMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
 
+  const importApiRoot = createImportApiBuilderFromCtpClient(client)
+    .withProjectKeyValue({ projectKey });
 
-const getMyAPIClient = () => {
-  const authMiddleware = createAuthForPasswordFlow({
-    host: process.env.ME_AUTH_URL,
+  return importApiRoot;
+}
+
+function createStoreApiClient(prefix) {
+  const {
+    clientId,
+    clientSecret,
+    projectKey,
+    authHost,
+    host,
+    storeKey
+  } = readConfig(prefix);
+
+  const authMiddlewareOptions = {
+    host: authHost,
     projectKey,
     credentials: {
-      clientId: process.env.ME_CLIENT_ID,
-      clientSecret: process.env.ME_CLIENT_SECRET,
+      clientId,
+      clientSecret
+    },
+    fetch
+  };
+
+  const httpMiddlewareOptions = {
+    host: host,
+    fetch
+  };
+
+  const client = new ClientBuilder()
+    .withClientCredentialsFlow(authMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
+
+  const storeApiRoot = createApiBuilderFromCtpClient(client)
+    .withProjectKey({ projectKey });
+  // .inStoreKeyWithStoreKeyValue({ storeKey });
+
+  return storeApiRoot;
+
+}
+
+function createMyApiClient(prefix) {
+  const {
+    clientId,
+    clientSecret,
+    projectKey,
+    authHost,
+    host,
+    username,
+    password
+  } = readConfig(prefix);
+
+  const passwordAuthMiddlewareOptions = {
+    host: authHost,
+    projectKey,
+    credentials: {
+      clientId,
+      clientSecret,
       user: {
-        username: "test@test.com",
-        password: "password",
-      },
+        username,
+        password
+      }
     },
-    fetch,
-  });
-  const httpMiddleware = createHttpClient({
-    host: process.env.ME_API_URL,
-    fetch,
-  });
+    fetch
+  };
 
-  const ctpClient = createClient({
-    middlewares: [authMiddleware, httpMiddleware],
-  });
-  return ctpClient;
-};
+  const httpMiddlewareOptions = {
+    host: host,
+    fetch
+  };
 
-module.exports.apiRoot = createApiBuilderFromCtpClient(getClient());
+  const client = new ClientBuilder()
+    .withPasswordFlow(passwordAuthMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
 
-module.exports.importApiRoot = createApiBuilderFromCtpClientOnlyForImports(
-  getImportClient()
-);
+  const myApiRoot = createApiBuilderFromCtpClient(client)
+    .withProjectKey({ projectKey })
+    .me();
 
-module.exports.storeApiRoot = createApiBuilderFromCtpClient(getStoreClient());
+  return myApiRoot;
 
-module.exports.myApiRoot = createApiBuilderFromCtpClient(getMyAPIClient());
-module.exports.projectKey = projectKey;
+}
+
+function createStoreMyApiClient(prefix) {
+  const {
+    clientId,
+    clientSecret,
+    projectKey,
+    authHost,
+    host,
+    storeKey,
+    username,
+    password
+  } = readConfig(prefix);
+
+  const passwordAuthMiddlewareOptions = {
+    host: authHost,
+    projectKey,
+    oauthUri: `/oauth/in-store/key=berlin-store/customers/token`,
+    credentials: {
+      clientId,
+      clientSecret,
+      user: {
+        username,
+        password
+      }
+    },
+    fetch
+  };
+
+  const httpMiddlewareOptions = {
+    host: host,
+    fetch
+  };
+
+  const client = new ClientBuilder()
+    .withPasswordFlow(passwordAuthMiddlewareOptions)
+    .withHttpMiddleware(httpMiddlewareOptions)
+    .build();
+
+  const storeMyApiRoot = createApiBuilderFromCtpClient(client)
+    .withProjectKey({ projectKey })
+    .inStoreKeyWithStoreKeyValue({ storeKey })
+    .me();
+
+  return storeMyApiRoot;
+
+}
+
+module.exports.apiRoot = createApiClient(Prefix.DEV);
+module.exports.importApiRoot = createImportApiClient(Prefix.IMPORT);
+module.exports.storeApiRoot = createStoreApiClient(Prefix.STORE);
+module.exports.myApiRoot = createMyApiClient(Prefix.ME);
+module.exports.storeMyApiRoot = createStoreMyApiClient(Prefix.STORE_ME);

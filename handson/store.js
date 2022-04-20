@@ -1,16 +1,16 @@
-const { apiRoot, storeApiRoot, projectKey } = require("./client.js");
+const { apiRoot, storeApiRoot } = require("./client");
 
 //TODO store and productProjection endpoint
 
 module.exports.getStoreByKey = (key) =>
-  apiRoot.withProjectKey({projectKey})
+  apiRoot
     .stores()
-    .withKey({key})
+    .withKey({ key })
     .get()
     .execute();
 
 module.exports.getCustomersInStore = (storeKey) =>
-  storeApiRoot.withProjectKey({ projectKey })
+  storeApiRoot
     .inStoreKeyWithStoreKeyValue({ storeKey })
     .customers()
     .get()
@@ -18,17 +18,17 @@ module.exports.getCustomersInStore = (storeKey) =>
 
 module.exports.addProductSelectionToStore = async (storeKey, productSelectionKey) =>
   this.getStoreByKey(storeKey).then((store) =>
-    apiRoot.withProjectKey({projectKey})
+    apiRoot
       .stores()
-      .withKey({key: storeKey})
+      .withKey({ key: storeKey })
       .post({
         body: {
           version: store.body.version,
           actions: [
             {
               action: "addProductSelection",
-              productSelection: { key: productSelectionKey},
-              active: true      
+              productSelection: { key: productSelectionKey },
+              active: true
             }
           ]
         }
@@ -37,7 +37,7 @@ module.exports.addProductSelectionToStore = async (storeKey, productSelectionKey
   )
 
 module.exports.getProductsInStore = (storeKey) =>
-  apiRoot.withProjectKey({ projectKey })
+  apiRoot
     .inStoreKeyWithStoreKeyValue({ storeKey })
     .productSelectionAssignments()
     .get({
@@ -49,18 +49,17 @@ module.exports.getProductsInStore = (storeKey) =>
     .execute();
 
 module.exports.createInStoreCart = (storeKey, customer) =>
-    storeApiRoot.withProjectKey({projectKey})
-        .inStoreKeyWithStoreKeyValue({storeKey})
-        .carts()
-        .post({
-            body: {
-                currency: "EUR",
-                customerId: customer.body.id,
-                customerEmail: customer.body.email,
-                store: {key: storeKey}
-            }
-        })
-        .execute();
+  storeApiRoot
+    .inStoreKeyWithStoreKeyValue({ storeKey })
+    .carts()
+    .post({
+      body: {
+        currency: "EUR",
+        customerId: customer.body.id,
+        customerEmail: customer.body.email,
+      }
+    })
+    .execute();
 
 
- 
+

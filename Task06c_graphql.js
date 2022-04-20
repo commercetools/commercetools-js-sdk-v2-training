@@ -1,4 +1,4 @@
-const { apiRoot, projectKey } = require("./handson/client.js");
+const { apiRoot } = require("./handson/client");
 const { log } = require("./logger");
 
 
@@ -21,13 +21,13 @@ query {
     }
   }
   `;
-  
-apiRoot.withProjectKey({projectKey})
+
+apiRoot
   .graphql()
   .post({
-      body:{
-          query,
-          variables:{}
-      }
+    body: {
+      query,
+      variables: {}
+    }
   }).execute()
-.then(log).catch(log)
+  .then(log).catch(log)

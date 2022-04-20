@@ -1,11 +1,9 @@
-const { apiRoot, projectKey } = require("./handson/client.js");
-const {log} = require('./logger');
-
-
+const { apiRoot } = require("./handson/client");
+const { log } = require("./logger");
 
 const customObjectDraft = {
     container: "compatibility-info",
-    key:'tulip-seed-product',
+    key: 'tulip-seed-product',
     value: {
         IncompatibleSKUs: "basil-seed-product",
         LeafletID: "leaflet_1234",
@@ -19,14 +17,12 @@ const customObjectDraft = {
 }
 
 apiRoot
-    .withProjectKey({ projectKey })
     .customObjects()
     .post({ body: customObjectDraft })
     .execute()
-.then(log).catch(log);
+    .then(log).catch(log);
 
 // apiRoot
-//     .withProjectKey({ projectKey })
 //     .customObjects()
 //     .withContainerAndKey({
 //         container: "compatibility-info",
@@ -34,4 +30,4 @@ apiRoot
 //     })
 //     .get()
 //     .execute()
-// .then(log).catch(log);
+//     .then(log).catch(log);
