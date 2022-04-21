@@ -1,14 +1,15 @@
-const {
+import {
   createCustomer,
   getCustomerById,
   getCustomerByKey,
   createCustomerToken,
   confirmCustomerEmail,
   assignCustomerToCustomerGroup,
-} = require("./handson/customer");
-const { log } = require("./logger.js");
+  CustomerDraftData,
+} from "./handson/customer";
+import { log } from "./utils/logger";
 
-const customerDraftData = {
+const customerDraftData: CustomerDraftData = {
   firstName: "test",
   lastName: "test",
   email: "test@test.com",
@@ -19,14 +20,14 @@ const customerDraftData = {
 
 // createCustomer(customerDraftData).then(log).catch(log);
 
-// getCustomerByKey('test123').then(log).catch(log);
+// getCustomerByKey("test123").then(log).catch(log);
 
 // getCustomerById("a303f0e7-8535-4784-a638-e59f05208355").then(log).catch(log);
 
-// getCustomerByKey('test123')
+// getCustomerByKey("test123")
 //   .then(createCustomerToken)
 //   .then(confirmCustomerEmail)
 //   .then(log)
 //   .catch(log);
 
-assignCustomerToCustomerGroup('test123','indoor-customers').then(log).catch(log);
+// assignCustomerToCustomerGroup("test123", "indoor-customers").then(log).catch(log);

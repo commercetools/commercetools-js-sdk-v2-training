@@ -1,22 +1,30 @@
-const { apiRoot, projectKey } = require("./client.js");
+import { apiRoot } from "./client";
+import { ClientResponse, Customer, CustomerDraft, CustomerToken, CustomerUpdateAction } from "@commercetools/platform-sdk";
 
-module.exports.getCustomerById = (ID) =>
+export const getCustomerById = (ID: string) =>
   apiRoot
-    .withProjectKey({ projectKey })
     .customers()
     .withId({ ID })
     .get()
     .execute();
-    
-module.exports.getCustomerByKey = (key) =>
+
+export const getCustomerByKey = (key: string) =>
   apiRoot
-    .withProjectKey({ projectKey })
     .customers()
     .withKey({ key })
     .get()
     .execute();
 
-const createCustomerDraft = (customerData) => {
+export interface CustomerDraftData {
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  password: string;
+  key: string;
+  countryCode: string;
+};
+
+const createCustomerDraft = (customerDraftData: CustomerDraftData): CustomerDraft => {
   const {
     email,
     password,
@@ -24,7 +32,7 @@ const createCustomerDraft = (customerData) => {
     lastName,
     countryCode,
     key,
-  } = customerData;
+  } = customerDraftData;
   return {
     email,
     password,
@@ -41,18 +49,16 @@ const createCustomerDraft = (customerData) => {
   };
 };
 
-module.exports.createCustomer = (customerData) =>
+export const createCustomer = (customerDraftData: CustomerDraftData) =>
   apiRoot
-    .withProjectKey({ projectKey })
     .customers()
     .post({
-      body: createCustomerDraft(customerData),
+      body: createCustomerDraft(customerDraftData),
     })
     .execute();
 
-module.exports.createCustomerToken = (customer) =>
+export const createCustomerToken = (customer: ClientResponse<Customer>) =>
   apiRoot
-    .withProjectKey({ projectKey })
     .customers()
     .emailToken()
     .post({
@@ -64,9 +70,8 @@ module.exports.createCustomerToken = (customer) =>
     })
     .execute();
 
-module.exports.confirmCustomerEmail = (token) =>
+export const confirmCustomerEmail = (token: ClientResponse<CustomerToken>) =>
   apiRoot
-    .withProjectKey({ projectKey })
     .customers()
     .emailConfirm()
     .post({
@@ -75,22 +80,22 @@ module.exports.confirmCustomerEmail = (token) =>
       },
     })
     .execute();
-        
-module.exports.assignCustomerToCustomerGroup = (
-  customerKey,
-  customerGroupKey
+
+export const assignCustomerToCustomerGroup = (
+  customerKey: string,
+  customerGroupKey: string
 ) => {
-  return getCustomerByKey(customerKey).then((customer) => {
-    const updateActions = [
+  return getCustomerByKey(customerKey).then((customer: ClientResponse<Customer>) => {
+    const updateActions: [CustomerUpdateAction] = [
       {
         action: "setCustomerGroup",
         customerGroup: {
+          typeId: "customer-group",
           key: customerGroupKey,
         },
       },
     ];
     return apiRoot
-      .withProjectKey({ projectKey })
       .customers()
       .withId({ ID: customer.body.id })
       .post({

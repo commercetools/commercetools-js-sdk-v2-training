@@ -1,7 +1,7 @@
-const highlight = require('cli-highlight').highlight
-const chalkAnimation = require('chalk-animation');
+import { highlight } from "cli-highlight";
+import * as chalkAnimation from "chalk-animation";
 
-const codeLog = function (o, lang) {
+const codeLog = function (o: any, lang: string = "json") {
     console.log(highlight(
         JSON.stringify(o, null, 4),
         {
@@ -11,8 +11,7 @@ const codeLog = function (o, lang) {
     ));
 }
 
-module.exports.log = function (o, lang) {
-    lang = lang ? lang : 'json';
+export const log = function (o: any) {
     if (o.hasOwnProperty('stack')) {
         console.error(o.stack)
         codeLog(o)

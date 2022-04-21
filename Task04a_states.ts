@@ -1,7 +1,7 @@
-const states = require("./handson/states");
-const { log } = require("./logger.js");
+import * as states from "./handson/states";
+import { log } from "./utils/logger";
 
-const orderPackedStateDraft = {
+const orderPackedStateDraft: states.StateDraftData = {
   key: "ff-order-packed",
   type: "OrderState",
   name: {
@@ -11,7 +11,7 @@ const orderPackedStateDraft = {
   initial: true,
 };
 
-const orderCompletedStateDraft = {
+const orderCompletedStateDraft: states.StateDraftData = {
   key: "ff-order-completed",
   type: "OrderState",
   name: {
@@ -24,14 +24,14 @@ const orderCompletedStateDraft = {
 const createStatesWithTransitions = async () => {
   let orderPackedState = await states.createNewState(orderPackedStateDraft)
   let orderCompletedState = await states.createNewState(orderCompletedStateDraft)
-  
-  orderPackedState = states.addTransition(orderPackedState.body.id, [orderCompletedState.body.id])
-  
-  orderCompletedState = states.addTransition(orderCompletedState.body.id, [])
+
+  orderPackedState = await states.addTransition(orderPackedState.body.id, [orderCompletedState.body.id])
+
+  orderCompletedState = await states.addTransition(orderCompletedState.body.id, [])
 
   return orderPackedState;
 };
 
 createStatesWithTransitions().then(log).catch(log)
 
-//states.getStateById(orderPackedState.id).then(log).catch(log)
+// states.getStateByKey(orderPackedStateDraft.key).then(log).catch(log)
