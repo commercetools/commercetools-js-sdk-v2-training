@@ -3,16 +3,17 @@ import { createApiBuilderFromCtpClient } from "@commercetools/platform-sdk";
 import { createApiBuilderFromCtpClient as createImportApiBuilderFromCtpClient } from "@commercetools/importapi-sdk";
 import fetch from "node-fetch";
 import { Prefix, readConfig } from "../utils/config";
+import { ApiRoot, ImportApiRoot, StoreMyApiRoot } from "../types/global";
 
 
-const createApiClient = (prefix: Prefix) => {
+const createApiClient = () => {
   const {
     clientId,
     clientSecret,
     projectKey,
     oauthHost,
     host,
-  } = readConfig(prefix);
+  } = readConfig(Prefix.DEV);
 
   const authMiddlewareOptions: AuthMiddlewareOptions = {
     host: oauthHost,
@@ -41,14 +42,14 @@ const createApiClient = (prefix: Prefix) => {
 
 }
 
-const createImportApiClient = (prefix: Prefix) => {
+const createImportApiClient = () => {
   const {
     clientId,
     clientSecret,
     projectKey,
     oauthHost,
     host,
-  } = readConfig(prefix);
+  } = readConfig(Prefix.IMPORT);
 
   const authMiddlewareOptions: AuthMiddlewareOptions = {
     host: oauthHost,
@@ -76,7 +77,7 @@ const createImportApiClient = (prefix: Prefix) => {
   return importApiRoot;
 }
 
-const createStoreApiClient = (prefix: Prefix) => {
+const createStoreApiClient = () => {
   const {
     clientId,
     clientSecret,
@@ -84,7 +85,7 @@ const createStoreApiClient = (prefix: Prefix) => {
     oauthHost,
     host,
     storeKey
-  } = readConfig(prefix);
+  } = readConfig(Prefix.STORE);
 
   const authMiddlewareOptions: AuthMiddlewareOptions = {
     host: oauthHost,
@@ -108,12 +109,12 @@ const createStoreApiClient = (prefix: Prefix) => {
 
   const storeApiRoot = createApiBuilderFromCtpClient(client)
     .withProjectKey({ projectKey });
-  // .inStoreKeyWithStoreKeyValue({ storeKey });
 
   return storeApiRoot;
+
 }
 
-const createMyApiClient = (prefix: Prefix) => {
+const createMyApiClient = () => {
   const {
     clientId,
     clientSecret,
@@ -122,7 +123,7 @@ const createMyApiClient = (prefix: Prefix) => {
     host,
     username,
     password
-  } = readConfig(prefix);
+  } = readConfig(Prefix.ME);
 
   const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
     host: oauthHost,
@@ -152,9 +153,10 @@ const createMyApiClient = (prefix: Prefix) => {
     .withProjectKey({ projectKey });
 
   return myApiRoot;
+
 }
 
-const createStoreMyApiClient = (prefix: Prefix) => {
+const createStoreMyApiClient = () => {
   const {
     clientId,
     clientSecret,
@@ -164,7 +166,7 @@ const createStoreMyApiClient = (prefix: Prefix) => {
     storeKey,
     username,
     password
-  } = readConfig(prefix);
+  } = readConfig(Prefix.STORE_ME);
 
   const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
     host: oauthHost,
@@ -196,10 +198,11 @@ const createStoreMyApiClient = (prefix: Prefix) => {
     .inStoreKeyWithStoreKeyValue({ storeKey });
 
   return storeMyApiRoot;
+
 }
 
-export const apiRoot = createApiClient(Prefix.DEV);
-export const importApiRoot = createImportApiClient(Prefix.IMPORT);
-export const storeApiRoot = createStoreApiClient(Prefix.STORE);
-export const myApiRoot = createMyApiClient(Prefix.ME);
-export const storeMyApiRoot = createStoreMyApiClient(Prefix.STORE_ME);
+export const apiRoot: ApiRoot = createApiClient();
+export const importApiRoot: ImportApiRoot = createImportApiClient();
+export const storeApiRoot: ApiRoot = createStoreApiClient();
+export const myApiRoot: ApiRoot = createMyApiClient();
+export const storeMyApiRoot: StoreMyApiRoot = createStoreMyApiClient();
