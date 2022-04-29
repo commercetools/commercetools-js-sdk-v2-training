@@ -1,31 +1,32 @@
-const { apiRoot, projectKey } = require("./client.js");
+const { projectApiRoot } = require("./client");
 
 module.exports.getAllProducts = () =>
-  apiRoot.withProjectKey({ projectKey }).products().get().execute();
+  projectApiRoot.products().get().execute();
 
-// filter query recalculates everything
-// filter facet recalculates others only
-module.exports.simulateSearch = () =>
-  apiRoot
-    .withProjectKey({ projectKey })
+
+module.exports.simulateSearch = (searchParams) =>
+  projectApiRoot
     .productProjections()
     .search()
     .get({
       queryArgs: {
-        filter: 'categories.id:"67c7ec58-0ea8-4e23-84ea-93b02e33184d"',
-        facet: ["variants.attributes.size", "variants.attributes.color"],
-        "filter.query": "variants.attributes.size:256",
+        staged: searchParams.staged,
+        markMatchingVariants: searchParams.markMatchingVariants,
+        withTotal: searchParams.withTotal,
+        "filter.query": searchParams["filter.query"],
+        "filter.facets": searchParams["filter.facets"],
+        facet: searchParams.facet,
+        filter: searchParams.filter,
       },
     })
     .execute();
 
 module.exports.simulatePagination = async (perPage, where) =>
-  apiRoot
-    .withProjectKey({ projectKey })
+  projectApiRoot
     .products()
     .get({
-      queryArgs: {     
-        sort: "id asc", 
+      queryArgs: {
+        sort: "id asc",
         limit: perPage,
         where: where,
         withTotal: false

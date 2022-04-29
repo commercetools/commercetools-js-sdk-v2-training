@@ -1,27 +1,44 @@
-const { createImportContainer, importProducts, checkImportSummary, checkImportOperationsStatus, checkImportOperationStatusById } = require("./handson/importService");
-const { log } = require("./logger.js");
+const {
+    checkImportOperationStatusById,
+    checkImportOperationStatus,
+    checkImportSummary,
+    createImportContainer,
+    importProducts,
+    importPrices
+} = require("./handson/importService");
+const { log } = require("./utils/logger");
+
+// TODO:
+//  Implement importApiRoot in ./handson/client.js
+//  Provide a container key
+//  CREATE an import container
+//  CREATE a product import request
+//  CHECK the status of your import requests
 
 const containerKey = "ff-ImportContainer";
 
 // Create an import container
-// createImportContainer(containerKey).then(log).catch(log);
+createImportContainer(containerKey).then(log).catch(log);
 
 // import products
 // importProducts(containerKey).then(log).catch(log);
 
+// Import prices
+// importPrices(containerKey).then(log).catch(log);
+
 // check import summary for your container
-checkImportSummary(containerKey).then(log).catch(log);
+// checkImportSummary(containerKey).then(log).catch(log);
 
 // check import operations for your container
-checkImportOperationsStatus(containerKey).then(operations =>
-    operations.body.results.forEach(operation => 
-        log(operation.id + " : " +operation.state)
-    )
-)
+// checkImportOperationStatus(containerKey).then(operations =>
+//     operations.body.results.forEach(operation =>
+//         log(operation.id + " : " + operation.state)
+//     )
+// );
 
 // Check the status of import operations by their Ids
-//  checkImportOperationStatusById("2e325e01-1193-4d8a-92c9-af29da1cc0fb").then(log).catch(log);
-//  checkImportOperationStatusById("cd61acae-301d-4984-8dc2-2deb0ba5035c").then(log).catch(log);
+// checkImportOperationStatusById("9eee411c-a698-4e13-b1fd-0996180df437").then(log).catch(log);
+// checkImportOperationStatusById("340ec151-ebd3-422a-97a8-e7625e85633a").then(log).catch(log);
 
 // https://github.com/commercetools/commercetools-project-sync#run
 // docker run \

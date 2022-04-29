@@ -1,34 +1,37 @@
-const { apiRoot, storeApiRoot, projectKey } = require("./client.js");
+const { projectApiRoot, projectStoreApiRoot } = require("./client");
 
-//TODO store and productProjection endpoint
+//TODO store and productSelection endpoint
 
 module.exports.getStoreByKey = (key) =>
-  apiRoot.withProjectKey({projectKey})
+  projectApiRoot
     .stores()
-    .withKey({key})
+    .withKey({ key })
     .get()
     .execute();
 
 module.exports.getCustomersInStore = (storeKey) =>
-  storeApiRoot.withProjectKey({ projectKey })
+  projectStoreApiRoot
     .inStoreKeyWithStoreKeyValue({ storeKey })
     .customers()
     .get()
     .execute();
 
-module.exports.addProductSelectionToStore = async (storeKey, productSelectionKey) =>
+module.exports.addProductSelectionToStore = (storeKey, productSelectionKey) =>
   this.getStoreByKey(storeKey).then((store) =>
-    apiRoot.withProjectKey({projectKey})
+    projectApiRoot
       .stores()
-      .withKey({key: storeKey})
+      .withKey({ key: storeKey })
       .post({
         body: {
           version: store.body.version,
           actions: [
             {
               action: "addProductSelection",
-              productSelection: { key: productSelectionKey},
-              active: true      
+              productSelection: {
+                typeId: "product-selection",
+                key: productSelectionKey
+              },
+              active: true
             }
           ]
         }
@@ -37,30 +40,13 @@ module.exports.addProductSelectionToStore = async (storeKey, productSelectionKey
   )
 
 module.exports.getProductsInStore = (storeKey) =>
-  apiRoot.withProjectKey({ projectKey })
+  projectApiRoot
     .inStoreKeyWithStoreKeyValue({ storeKey })
     .productSelectionAssignments()
     .get({
       queryArgs: {
-        expand: "product",
-        expand: "productSelection"
+        expand: ["product", "productSelection"]
       }
     })
     .execute();
 
-module.exports.createInStoreCart = (storeKey, customer) =>
-    storeApiRoot.withProjectKey({projectKey})
-        .inStoreKeyWithStoreKeyValue({storeKey})
-        .carts()
-        .post({
-            body: {
-                currency: "EUR",
-                customerId: customer.body.id,
-                customerEmail: customer.body.email,
-                store: {key: storeKey}
-            }
-        })
-        .execute();
-
-
- 

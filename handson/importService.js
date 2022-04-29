@@ -1,104 +1,138 @@
-const { importApiRoot, projectKey } = require("./client.js");
 const csvtojsonV2 = require("csvtojson");
+const { projectImportApiRoot } = require("./client");
 
 module.exports.createImportContainer = (key) =>
-  importApiRoot
-    .withProjectKeyValue({ projectKey })
+  projectImportApiRoot
     .importContainers()
     .post({
-      body: {key},
+      body: { key },
     })
     .execute();
 
 module.exports.checkImportSummary = (importContainerKey) =>
-    importApiRoot
-      .withProjectKeyValue({projectKey})
-      .importContainers()
-      .withImportContainerKeyValue({importContainerKey})
-      .importSummaries()
-      .get()
-      .execute();
-
-module.exports.checkImportOperationsStatus = (importContainerKey) =>
-  importApiRoot
-    .withProjectKeyValue({ projectKey })
+  projectImportApiRoot
     .importContainers()
-    .withImportContainerKeyValue({importContainerKey})
+    .withImportContainerKeyValue({ importContainerKey })
+    .importSummaries()
+    .get()
+    .execute();
+
+module.exports.checkImportOperationStatus = (importContainerKey) =>
+  projectImportApiRoot
+    .importContainers()
+    .withImportContainerKeyValue({ importContainerKey })
     .importOperations()
-    .get( { queryArgs: { debug: true } } )
+    .get({ queryArgs: { debug: true } })
     .execute();
 
 module.exports.checkImportOperationStatusById = (id) =>
-  importApiRoot
-    .withProjectKeyValue({ projectKey })
+  projectImportApiRoot
     .importOperations()
-    .withIdValue({id})
+    .withIdValue({ id })
     .get()
     .execute();
 
 module.exports.importProducts = async (importContainerKey) =>
-  importApiRoot
-    .withProjectKeyValue({ projectKey })
+  projectImportApiRoot
     .productDrafts()
     .importContainers()
-    .withImportContainerKeyValue({importContainerKey})
+    .withImportContainerKeyValue({ importContainerKey })
     .post({
-      body: await createImportProductsDraft(),
+      body: await createProductDraftImportRequest(),
     })
     .execute();
 
-const createImportProductsDraft = async () => {
+const createProductDraftImportRequest = async () => {
   return {
     type: "product-draft",
-    resources: await getProductDraftsArray(),
+    resources: await getProductDraftImportArray(),
   };
 };
 
-const getProductDraftsArray = () => {
-  // get data from csv
-  // create product drafts array and send it back
-  let productDraftsArray = [];
-  let participantNamePrefix = "ff";
-  return csvtojsonV2()
-    .fromFile("./products.csv")
-    .then((products) => {
-      products.forEach((product) => {
-        productDraftsArray.push({
-          key: participantNamePrefix + "-" + product.productName,
-          name: {
-            "de": product.productName,
-          },
-          productType: {
-            typeId: "product-type",
-            key: product.productType,
-          },
-          slug: {
-            "de": participantNamePrefix + "-" + product.productName,
-          },
-          description: {
-            "de": product.productDescription,
-          },
-          masterVariant: {
-            sku: product.inventoryId,
-            key: participantNamePrefix + "-" + product.productName,
-            prices: [
-              {
-                value: {
-                  type: "centPrecision",
-                  currencyCode: product.currencyCode,
-                  centAmount: parseInt(product.basePrice),
-                },
-              },
-            ],
-            images: [
-              {
-                url: product.imageUrl,
-                dimensions: { w: 177, h: 237 },
-              },
-            ],
-          },
-        });
-      });
-      return productDraftsArray;
-    });
-};
+
+const getProductDraftImportArray = async () => {
+
+  const participantNamePrefix = "ff";
+
+  // Get products data from csv
+  const products = await csvtojsonV2()
+    .fromFile("./products.csv");
+
+
+  const productToProductDraftImport = (product) => {
+    return {
+      key: participantNamePrefix + "-" + product.productName,
+      name: {
+        "en": product.productName,
+        "de": product.productName
+      },
+      productType: {
+        typeId: "product-type",
+        key: product.productType
+      },
+      slug: {
+        "en": participantNamePrefix + "-" + product.productName,
+        "de": participantNamePrefix + "-" + product.productName
+      },
+      description: {
+        "en": product.description,
+        "de": product.description
+      },
+      masterVariant: {
+        sku: participantNamePrefix + "-" + product.inventoryId,
+        key: participantNamePrefix + "-" + product.productName,
+        prices: [
+          {
+            value: {
+              type: "centPrecision",
+              currencyCode: product.currencyCode,
+              centAmount: parseInt(product.basePrice, 10)
+            }
+          }
+        ],
+        images: [
+          {
+            url: product.imageUrl,
+            dimensions: { w: 177, h: 237 }
+          }
+        ]
+      }
+    };
+  }
+
+  return products.map(productToProductDraftImport);
+}
+
+module.exports.importPrices = async (importContainerKey) =>
+  projectImportApiRoot
+    .prices()
+    .importContainers()
+    .withImportContainerKeyValue({ importContainerKey })
+    .post({
+      body: createPriceImportRequest()
+    })
+    .execute();
+
+const createPriceImportRequest = () => {
+  return {
+    type: "price",
+    resources: [
+      {
+        key: "ff-price-import-redWine-key",
+        product: {
+          typeId: "product",
+          key: "sfs-RedWine"
+        },
+        "productVariant": {
+          typeId: "product-variant",
+          key: "sfs-RedWine"
+        },
+        value: {
+          "type": "centPrecision",
+          "currencyCode": "EUR",
+          "centAmount": 3000
+        },
+      }
+    ]
+  };
+}
