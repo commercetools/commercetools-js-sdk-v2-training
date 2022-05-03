@@ -26,9 +26,4 @@ const typeDraft = {
     }]
 }
 
-projectApiRoot
-    .types()
-    .post({ body: typeDraft })
-    .execute()
-    .then(log)
-    .catch(log);
+// TODO: Create the custom type

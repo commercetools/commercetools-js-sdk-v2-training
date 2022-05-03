@@ -13,10 +13,5 @@ const extensionDraft = {
     }]
 }
 
-projectApiRoot
-    .extensions()
-    .post({ body: extensionDraft })
-    .execute()
-    .then(log)
-    .catch(log);
+// TODO: CREATE the extension
 

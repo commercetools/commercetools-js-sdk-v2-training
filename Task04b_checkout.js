@@ -67,4 +67,4 @@ const checkoutProcess = async () => {
   }
 };
 
-checkoutProcess().then(log).catch(log);
+// checkoutProcess().then(log).catch(log);

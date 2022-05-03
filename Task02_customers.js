@@ -21,19 +21,19 @@ const customerDraftData = {
 // CREATE a customer
 createCustomer(customerDraftData).then(log).catch(log);
 
-getCustomerByKey("test123").then(log).catch(log);
+// getCustomerByKey("test123").then(log).catch(log);
 
-getCustomerById("a303f0e7-8535-4784-a638-e59f05208355").then(log).catch(log);
+// getCustomerById("a303f0e7-8535-4784-a638-e59f05208355").then(log).catch(log);
 
 // TODO:
 // CREATE an email verification token
 // VERIFY customer
-getCustomerByKey("test123")
-  .then(createCustomerToken)
-  .then(confirmCustomerEmail)
-  .then(log)
-  .catch(log);
+// getCustomerByKey("test123")
+//   .then(createCustomerToken)
+//   .then(confirmCustomerEmail)
+//   .then(log)
+//   .catch(log);
 
 // TODO:
 // ASSIGN customer to a customer group
-assignCustomerToCustomerGroup("test123", "indoor-customers").then(log).catch(log);
+// assignCustomerToCustomerGroup("test123", "indoor-customers").then(log).catch(log);

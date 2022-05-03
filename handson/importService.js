@@ -1,46 +1,15 @@
 const csvtojsonV2 = require("csvtojson");
 const { projectImportApiRoot } = require("./client");
 
-module.exports.createImportContainer = (key) =>
-  projectImportApiRoot
-    .importContainers()
-    .post({
-      body: { key },
-    })
-    .execute();
+module.exports.createImportContainer = (key) => { }
 
-module.exports.checkImportSummary = (importContainerKey) =>
-  projectImportApiRoot
-    .importContainers()
-    .withImportContainerKeyValue({ importContainerKey })
-    .importSummaries()
-    .get()
-    .execute();
+module.exports.checkImportSummary = (importContainerKey) => { }
 
-module.exports.checkImportOperationStatus = (importContainerKey) =>
-  projectImportApiRoot
-    .importContainers()
-    .withImportContainerKeyValue({ importContainerKey })
-    .importOperations()
-    .get({ queryArgs: { debug: true } })
-    .execute();
+module.exports.checkImportOperationStatus = (importContainerKey) => { }
 
-module.exports.checkImportOperationStatusById = (id) =>
-  projectImportApiRoot
-    .importOperations()
-    .withIdValue({ id })
-    .get()
-    .execute();
+module.exports.checkImportOperationStatusById = (id) => { }
 
-module.exports.importProducts = async (importContainerKey) =>
-  projectImportApiRoot
-    .productDrafts()
-    .importContainers()
-    .withImportContainerKeyValue({ importContainerKey })
-    .post({
-      body: await createProductDraftImportRequest(),
-    })
-    .execute();
+module.exports.importProducts = async (importContainerKey) => { }
 
 const createProductDraftImportRequest = async () => {
   return {

@@ -22,13 +22,4 @@ query {
   }
   `;
 
-projectApiRoot
-  .graphql()
-  .post({
-    body: {
-      query,
-      variables: {}
-    }
-  }).execute()
-  .then(log)
-  .catch(log)
+// TODO: POST GraphQL query

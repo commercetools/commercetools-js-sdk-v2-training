@@ -1,70 +1,22 @@
 const { projectMyApiRoot, projectStoreMyApiRoot } = require("./client");
 
-//TODO me endpoint
+//TODO me client
 
-module.exports.getMe = () =>
-  projectMyApiRoot
-    .me()
-    .get()
-    .execute();
+module.exports.getMe = () => { }
 
-module.exports.getMyOrders = () =>
-  projectMyApiRoot
-    .me()
-    .orders()
-    .get()
-    .execute();
+module.exports.getMyOrders = () => { }
 
-module.exports.createMyCart = (customerEmail) =>
-  projectMyApiRoot
-    .me()
-    .carts()
-    .post({
-      body: {
-        currency: "EUR",
-        customerEmail
-      }
-    })
-    .execute();
+module.exports.createMyCart = (customerEmail) => { }
 
-module.exports.getMyActiveCart = () =>
-  projectMyApiRoot
-    .me()
-    .activeCart()
-    .get()
-    .execute();
+module.exports.getMyActiveCart = () => { }
 
-// TODO in-store me endpoint
+// TODO in-store me client
 
 // BUG: currently get method does not exist, once SDK is fixed enable this
-// module.exports.getStoreMe = () =>
-//   projectStoreMyApiRoot
-//     .me()
-//     .get()
-//     .execute();
+module.exports.getStoreMe = () => { }
 
-module.exports.getStoreMyOrders = () =>
-  projectStoreMyApiRoot
-    .me()
-    .orders()
-    .get()
-    .execute();
+module.exports.getStoreMyOrders = () => { }
 
-module.exports.createInStoreMyCart = (customerEmail) =>
-  projectStoreMyApiRoot
-    .me()
-    .carts()
-    .post({
-      body: {
-        currency: "EUR",
-        customerEmail
-      }
-    })
-    .execute();
+module.exports.createInStoreMyCart = (customerEmail) => { }
 
-module.exports.getStoreMyActiveCart = () =>
-  projectStoreMyApiRoot
-    .me()
-    .activeCart()
-    .get()
-    .execute();
+module.exports.getStoreMyActiveCart = () => { }

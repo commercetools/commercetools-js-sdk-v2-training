@@ -19,9 +19,4 @@ const subscriptionDraft = {
     }]
 }
 
-projectApiRoot
-    .subscriptions()
-    .post({ body: subscriptionDraft })
-    .execute()
-    .then(log)
-    .catch(log);
+// TODO : CREATE the subscription

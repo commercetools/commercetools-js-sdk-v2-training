@@ -17,20 +17,6 @@ const customObjectDraft = {
 
 }
 
-projectApiRoot
-    .customObjects()
-    .post({ body: customObjectDraft })
-    .execute()
-    .then(log)
-    .catch(log);
+// TODO : CREATE the custom object
 
-// projectApiRoot
-//     .customObjects()
-//     .withContainerAndKey({
-//         container: "compatibility-info",
-//         key: "tulip-seed-product"
-//     })
-//     .get()
-//     .execute()
-//     .then(log)
-//     .catch(log);
+// TODO : GET the custom object by container and key

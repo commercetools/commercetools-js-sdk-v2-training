@@ -21,15 +21,4 @@ module.exports.simulateSearch = (searchParams) =>
     })
     .execute();
 
-module.exports.simulatePagination = async (perPage, where) =>
-  projectApiRoot
-    .products()
-    .get({
-      queryArgs: {
-        sort: "id asc",
-        limit: perPage,
-        where: where,
-        withTotal: false
-      },
-    })
-    .execute();
+module.exports.simulatePagination = async (perPage, where) => { }

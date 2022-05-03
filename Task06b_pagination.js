@@ -1,8 +1,11 @@
-const { simulatePagination } = require("./handson/search");
+const { getAllProducts, simulatePagination } = require("./handson/search");
 const { log } = require("./utils/logger");
 
 // UseCases
 // Fetching ALL products
+
+getAllProducts().then(log).catch(log);
+
 // Fetching ALL products of a certain type
 // Fetching ALL orders
 // Pagination of some entities BUT only ordered via id
