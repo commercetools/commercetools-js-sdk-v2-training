@@ -1,5 +1,9 @@
 const states = require("./handson/states");
-const { log } = require("./logger.js");
+const { log } = require("./utils/logger");
+
+// TODO
+// Use states.js to create your designed order state machine
+//
 
 const orderPackedStateDraft = {
   key: "ff-order-packed",
@@ -11,27 +15,27 @@ const orderPackedStateDraft = {
   initial: true,
 };
 
-const orderCompletedStateDraft = {
-  key: "ff-order-completed",
+const orderShippedStateDraft = {
+  key: "ff-order-Shipped",
   type: "OrderState",
   name: {
-    "de": "FF Order Completed ",
-    "en": "FF Order Completed ",
+    "de": "FF Order Shipped ",
+    "en": "FF Order Shipped ",
   },
   initial: false,
 };
 
 const createStatesWithTransitions = async () => {
   let orderPackedState = await states.createNewState(orderPackedStateDraft)
-  let orderCompletedState = await states.createNewState(orderCompletedStateDraft)
-  
-  orderPackedState = states.addTransition(orderPackedState.body.id, [orderCompletedState.body.id])
-  
-  orderCompletedState = states.addTransition(orderCompletedState.body.id, [])
+  let orderShippedState = await states.createNewState(orderShippedStateDraft)
+
+  orderPackedState = await states.addTransition(orderPackedState.body.id, [orderShippedState.body.id])
+
+  orderShippedState = await states.addTransition(orderShippedState.body.id, [])
 
   return orderPackedState;
 };
 
 createStatesWithTransitions().then(log).catch(log)
 
-//states.getStateById(orderPackedState.id).then(log).catch(log)
+// states.getStateByKey(orderPackedStateDraft.key).then(log).catch(log)

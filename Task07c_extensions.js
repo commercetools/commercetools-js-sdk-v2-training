@@ -1,24 +1,22 @@
-const { apiRoot, projectKey } = require("./handson/client.js");
-const {log} = require('./logger');
-
-
+const { projectApiRoot } = require("./handson/client");
+const { log } = require("./utils/logger");
 
 const extensionDraft = {
-    key:'orderChecker',
-    destination:{
-        type:'HTTP',
-        url:'https://europe-west3-ct-support.cloudfunctions.net/training-extensions-sample'
+    key: "orderChecker",
+    destination: {
+        type: "HTTP",
+        url: "https://europe-west3-ct-support.cloudfunctions.net/training-extensions-sample"
     },
-    triggers:[{
-        resourceTypeId:'order',
-        actions:['Create']
+    triggers: [{
+        resourceTypeId: "order",
+        actions: ["Create"]
     }]
 }
 
-apiRoot
-    .withProjectKey({ projectKey })
+projectApiRoot
     .extensions()
     .post({ body: extensionDraft })
     .execute()
-.then(log).catch(log)
+    .then(log)
+    .catch(log);
 

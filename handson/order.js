@@ -1,24 +1,26 @@
-const { apiRoot, projectKey } = require("./client.js");
-const { getCustomerByKey } = require( "./customer.js" );
+const { projectApiRoot } = require("./client");
+const { getCustomerByKey } = require("./customer");
 
 module.exports.createCart = (customerKey) =>
-getCustomerByKey(customerKey).then((customer) =>
-  apiRoot.withProjectKey({ projectKey })
-    .carts()
-    .post({
-      body: {
-        currency: "EUR",
-        country: "DE",
-        customerId: customer.body.id,
-        customerEmail: customer.body.email,
-        shippingAddress: customer.body.addresses.find(address => address.id == customer.body.defaultShippingAddressId)
-      }
-    })
-    .execute()
-)
+  getCustomerByKey(customerKey).then((customer) =>
+    projectApiRoot
+      .carts()
+      .post({
+        body: {
+          currency: "EUR",
+          country: "DE",
+          customerId: customer.body.id,
+          customerEmail: customer.body.email,
+          shippingAddress: customer.body.addresses.find(address => address.id == customer.body.defaultShippingAddressId),
+          inventoryMode: "ReserveOnOrder",
+          deleteDaysAfterLastModification: 90
+        }
+      })
+      .execute()
+  );
 
 module.exports.createAnonymousCart = () =>
-  apiRoot.withProjectKey({ projectKey })
+  projectApiRoot
     .carts()
     .post({
       body: {
@@ -26,63 +28,119 @@ module.exports.createAnonymousCart = () =>
         country: "DE",
       }
     })
-    .execute()  
+    .execute();
 
 module.exports.customerSignIn = (customerDetails) =>
-  apiRoot.withProjectKey({ projectKey })
+  projectApiRoot
     .login()
     .post({ body: customerDetails })
     .execute();
 
 module.exports.getCartById = (ID) =>
-  apiRoot.withProjectKey({ projectKey }).carts().withId({ ID }).get().execute();
+  projectApiRoot
+    .carts()
+    .withId({ ID })
+    .get()
+    .execute();
 
-module.exports.addLineItemsToCart = (cartId, arrayOfSKUs) => 
-  this.getCartById(cartId).then((cart) => 
-    apiRoot.withProjectKey({projectKey})
+module.exports.addLineItemsToCart = (cartId, channelKey, arrayOfSKUs) =>
+  this.getCartById(cartId).then((cart) =>
+    projectApiRoot
       .carts()
-      .withId({ID: cartId})
+      .withId({ ID: cartId })
       .post({
         body: {
           version: cart.body.version,
           actions: arrayOfSKUs.map((sku) => {
             return {
               action: "addLineItem",
-              sku
+              sku,
+              supplyChannel: {
+                typeId: "channel",
+                key: channelKey
+              },
             };
-          }
-          )
+          })
         }
       })
       .execute()
-  )
+  );
 
 module.exports.addDiscountCodeToCart = (cartId, discountCode) =>
-  this.getCartById(cartId).then((cart) => 
-    apiRoot.withProjectKey({ projectKey })
+  this.getCartById(cartId).then((cart) =>
+    projectApiRoot
       .carts()
       .withId({ ID: cartId })
       .post({
         body: {
-          actions: [ {
-              action: "addDiscountCode",
-              code: discountCode,
-            } ],
+          actions: [{
+            action: "addDiscountCode",
+            code: discountCode,
+          }],
           version: cart.body.version,
         },
       })
       .execute()
-  )
+  );
 
-module.exports.createOrderFromCart = (cartId) => 
+module.exports.recalculate = (cartId) =>
+  this.getCartById(cartId).then((cart) =>
+    projectApiRoot
+      .carts()
+      .withId({ ID: cartId })
+      .post({
+        body: {
+          actions: [{
+            action: "recalculate",
+          }],
+          version: cart.body.version,
+        },
+      })
+      .execute()
+  );
+
+module.exports.setShippingMethod = async (cartId) => {
+  const matchingShippingMethod = (await projectApiRoot
+    .shippingMethods()
+    .matchingCart()
+    .get({
+      queryArgs: {
+        cartId
+      }
+    })
+    .execute()).body.results[0];
+
+  return this.getCartById(cartId).then(cart =>
+    projectApiRoot
+      .carts()
+      .withId({ ID: cartId })
+      .post({
+        body: {
+          actions: [{
+            action: "setShippingMethod",
+            shippingMethod: {
+              typeId: "shipping-method",
+              id: matchingShippingMethod.id
+            }
+          }],
+          version: cart.body.version
+        }
+      })
+      .execute()
+  );
+
+}
+
+
+module.exports.createOrderFromCart = (cartId) =>
   createOrderFromCartDraft(cartId).then((orderFromCartDraft) =>
-    apiRoot.withProjectKey({ projectKey })
+    projectApiRoot
       .orders()
       .post({
         body: orderFromCartDraft,
       })
       .execute()
-  )
+  );
 
 const createOrderFromCartDraft = (cartId) =>
   this.getCartById(cartId).then((cart) => {
@@ -90,71 +148,73 @@ const createOrderFromCartDraft = (cartId) =>
       id: cart.body.id,
       version: cart.body.version,
     };
-  })
+  });
 
 module.exports.getOrderById = (ID) =>
-  apiRoot.withProjectKey({ projectKey })
+  projectApiRoot
     .orders()
     .withId({ ID })
     .get()
-    .execute()
+    .execute();
 
 module.exports.updateOrderCustomState = (orderId, customStateKey) =>
   this.getOrderById(orderId).then((order) =>
-    apiRoot.withProjectKey({ projectKey })
+    projectApiRoot
       .orders()
       .withId({
         ID: orderId,
       })
       .post({
         body: {
-          actions: [ {
-              action: "transitionState",
-              state: { key: customStateKey }
-            } ],
+          actions: [{
+            action: "transitionState",
+            state: {
+              typeId: "state",
+              key: customStateKey
+            }
+          }],
           version: order.body.version
         }
       })
       .execute()
-  )
-
-module.exports.createPayment = (paymentDraft) =>
-  apiRoot.withProjectKey({ projectKey })
-    .payments()
-    .post({ body: paymentDraft })
-    .execute()
+  );
 
 module.exports.setOrderState = (orderId, stateName) =>
   this.getOrderById(orderId).then((order) =>
-    apiRoot.withProjectKey({ projectKey })
+    projectApiRoot
       .orders()
       .withId({ ID: orderId })
       .post({
         body: {
           version: order.body.version,
-          actions: [ {
-              action: "changeOrderState",
-              orderState: stateName
-            } ]
+          actions: [{
+            action: "changeOrderState",
+            orderState: stateName
+          }]
         }
       })
       .execute()
-  )
+  );
 
 
-module.exports.addPaymentToOrder = (orderId, paymentId) =>
-  this.getOrderById(orderId).then((order) =>
-    apiRoot.withProjectKey({ projectKey })
-      .orders()
-      .withId({ ID: orderId })
+module.exports.addPaymentToCart = (cartId, paymentId) =>
+  this.getCartById(cartId).then((cart) =>
+    projectApiRoot
+      .carts()
+      .withId({ ID: cartId })
       .post({
         body: {
-          version: order.body.version,
-          actions: [ {
-              action: "addPayment",
-              payment: { id: paymentId }
-            } ]
+          version: cart.body.version,
+          actions: [{
+            action: "addPayment",
+            payment: {
+              typeId: "payment",
+              id: paymentId
+            }
+          }]
         }
       })
       .execute()
-  )
+  );
+
+
