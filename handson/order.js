@@ -85,12 +85,14 @@ module.exports.createOrderFromCart = (cartId) =>
   )
 
 const createOrderFromCartDraft = (cartId) =>
-  this.getCartById(cartId).then((cart) => {
-    return {
-      id: cart.body.id,
-      version: cart.body.version,
-    };
-  })
+  this.getCartById(cartId)
+    .then((cart) => ({
+      cart: {
+        typeId: "cart",
+        id: cartId
+      },
+      version: cart.body.version
+    }))
 
 module.exports.getOrderById = (ID) =>
   apiRoot.withProjectKey({ projectKey })
