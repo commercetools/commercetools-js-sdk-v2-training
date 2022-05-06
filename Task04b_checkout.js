@@ -37,7 +37,7 @@ const checkoutProcess = async () => {
     emptyCart.body.id,['tulip-seed-box','tulip-seed-sack']
   );
   filledCart = await checkout.addDiscountCodeToCart(
-    emptyCart.body.id, 'SUMMER'
+    filledCart.body.id, 'SUMMER'
   );
   
   let order = await checkout.createOrderFromCart(filledCart.body.id);
