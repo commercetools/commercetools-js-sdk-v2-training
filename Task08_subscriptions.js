@@ -20,6 +20,21 @@ const subscriptionDraft = {
    
 }
 
+const subscriptionDraft = {
+    key: "subscriptionSample",
+    destination: {
+        type: "SQS",
+        queueUrl: "xxx",
+        accessKey: "xxx",
+        accessSecret: "xxx",
+        region: "eu-central-1"
+    },
+    messages: [{
+        resourceTypeId: "order",
+        types: ["OrderCreated"]
+    }]
+};
+
 apiRoot
     .withProjectKey({ projectKey })
     .subscriptions()
