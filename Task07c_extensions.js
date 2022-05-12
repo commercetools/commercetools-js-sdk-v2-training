@@ -14,6 +14,19 @@ const extensionDraft = {
         actions:['Create']
     }]
 }
+// const extensionDraft = {
+//     key: "orderChecker",
+//     destination: {
+//         type: "AWSLambda",
+//         arn: "xxx",
+//         accessKey: "xxx",
+//         accessSecret: "xxx"
+//     },
+//     triggers: [{
+//         resourceTypeId: "order",
+//         actions: ["Create"]
+//     }]
+// };
 
 apiRoot
     .withProjectKey({ projectKey })
