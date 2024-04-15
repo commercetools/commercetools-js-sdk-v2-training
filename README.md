@@ -1,3 +1,8 @@
+**THIS REPO IS DEPRECATED. PLEASE USE THE NEW VERSION**
+
+https://github.com/commercetools/commercetools-ts-sdk-training
+
+
 # commercetools-js-sdk-v2-training
 commercetools-js-sdk-v2-training
 
